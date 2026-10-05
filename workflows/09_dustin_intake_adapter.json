@@ -1,0 +1,113 @@
+{
+  "name": "Hawkins - Dustin Acquisition Intake Adapter",
+  "active": false,
+  "nodes": [
+    {
+      "id": "intake-input",
+      "name": "From Existing Dustin Workflow",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {
+        "inputSource": "passthrough"
+      }
+    },
+    {
+      "id": "intake-batches",
+      "name": "Jobs in Batches of Ten",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        260,
+        0
+      ],
+      "parameters": {
+        "batchSize": 10,
+        "options": {}
+      }
+    },
+    {
+      "id": "dustin-intake",
+      "name": "Ingest Dustin Jobs",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        520,
+        0
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "http://client-finder:8088/jobs/intake",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ { workflow_id: 'V0xHCzfFMgKR61yh', jobs: $input.all().map(x => ({ source_url: x.json.source_url, title: x.json.title, company: x.json.company || 'Unspecified', description: x.json.description || x.json.overview || x.json.job_description, questions: x.json.questions || [] })) } }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          },
+          "timeout": 180000
+        }
+      },
+      "credentials": {
+        "httpBearerAuth": {
+          "name": "CLIENT_FINDER_SERVICE_AUTH"
+        }
+      },
+      "executeOnce": true
+    }
+  ],
+  "connections": {
+    "From Existing Dustin Workflow": {
+      "main": [
+        [
+          {
+            "node": "Jobs in Batches of Ten",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Jobs in Batches of Ten": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Ingest Dustin Jobs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ingest Dustin Jobs": {
+      "main": [
+        [
+          {
+            "node": "Jobs in Batches of Ten",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Asia/Manila",
+    "saveDataErrorExecution": "none",
+    "saveDataSuccessExecution": "none",
+    "saveManualExecutions": false,
+    "saveExecutionProgress": false
+  },
+  "pinData": {},
+  "tags": []
+}

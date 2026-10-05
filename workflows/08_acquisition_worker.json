@@ -1,0 +1,214 @@
+{
+  "name": "Hawkins Personal Acquisition - Mike and Hopper",
+  "active": false,
+  "nodes": [
+    {
+      "id": "personal-schedule",
+      "name": "Schedule",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "acquisition-1",
+      "name": "Run One Queued Operation",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        260,
+        0
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "http://client-finder:8088/acquisition/run",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ {} }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          },
+          "timeout": 180000
+        }
+      },
+      "credentials": {
+        "httpBearerAuth": {
+          "name": "CLIENT_FINDER_SERVICE_AUTH"
+        }
+      }
+    },
+    {
+      "id": "acquisition-2",
+      "name": "Publish One Application Review",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        520,
+        0
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "http://client-finder:8088/applications/cards",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ {} }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          },
+          "timeout": 180000
+        }
+      },
+      "credentials": {
+        "httpBearerAuth": {
+          "name": "CLIENT_FINDER_SERVICE_AUTH"
+        }
+      }
+    },
+    {
+      "id": "acquisition-3",
+      "name": "Submit One Approved Application",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        780,
+        0
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "http://client-finder:8088/applications/send",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ {} }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          },
+          "timeout": 180000
+        }
+      },
+      "credentials": {
+        "httpBearerAuth": {
+          "name": "CLIENT_FINDER_SERVICE_AUTH"
+        }
+      }
+    },
+    {
+      "id": "acquisition-4",
+      "name": "Send One Web Approved Outreach",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1040,
+        0
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "http://client-finder:8088/outreach/send",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ {} }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          },
+          "timeout": 180000
+        }
+      },
+      "credentials": {
+        "httpBearerAuth": {
+          "name": "CLIENT_FINDER_SERVICE_AUTH"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Schedule": {
+      "main": [
+        [
+          {
+            "node": "Run One Queued Operation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run One Queued Operation": {
+      "main": [
+        [
+          {
+            "node": "Publish One Application Review",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Publish One Application Review": {
+      "main": [
+        [
+          {
+            "node": "Submit One Approved Application",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Submit One Approved Application": {
+      "main": [
+        [
+          {
+            "node": "Send One Web Approved Outreach",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Asia/Manila",
+    "saveDataErrorExecution": "none",
+    "saveDataSuccessExecution": "none",
+    "saveManualExecutions": false,
+    "saveExecutionProgress": false
+  },
+  "pinData": {},
+  "tags": []
+}

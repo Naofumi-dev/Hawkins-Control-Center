@@ -1,0 +1,2 @@
+# Optional personal hosted worker. Registry version checked 2026-10-05.
+playwright==1.63.0

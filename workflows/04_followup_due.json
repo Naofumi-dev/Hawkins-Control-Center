@@ -1,0 +1,728 @@
+{
+  "name": "Hawkins — Nancy (Client Finder Due Follow-ups)",
+  "active": false,
+  "nodes": [
+    {
+      "id": "cf-followup-schedule",
+      "name": "Daily 08:20 Manila",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "20 8 * * *"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "cf-followup-manual",
+      "name": "Prepare Follow-ups Manually",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        280
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "cf-followup-config",
+      "name": "Follow-up Owner Configuration",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        240,
+        140
+      ],
+      "notesInFlow": true,
+      "notes": "Configure the dedicated Client Finder Telegram bot, internal service Bearer credential, Hawkins Supabase REST credential, and owner user/chat IDs; confirm the prefilled Hawkins Supabase URL. Leave inactive until mail monitoring and live checks pass. This workflow only prepares a single eligible follow-up draft; sending still requires fresh owner approval in the review workflow.",
+      "parameters": {
+        "mode": "manual",
+        "includeOtherFields": false,
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cf-owner-user-id",
+              "name": "owner_user_id",
+              "type": "string",
+              "value": "YOUR_CLIENT_FINDER_TELEGRAM_USER_ID"
+            },
+            {
+              "id": "cf-owner-chat-id",
+              "name": "chat_id",
+              "type": "string",
+              "value": "YOUR_CLIENT_FINDER_TELEGRAM_PRIVATE_CHAT_ID"
+            },
+            {
+              "id": "cf-supabase-base-url",
+              "name": "supabase_base_url",
+              "type": "string",
+              "value": "https://mtdavgadkiiofwikzdtn.supabase.co"
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "cf-followup-config-check",
+      "name": "Follow-up Configuration Ready?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        460,
+        140
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "cf-config-valid",
+              "leftValue": "={{ /^[0-9]+$/.test($json.owner_user_id) && /^-?[0-9]+$/.test($json.chat_id) && /^https:\\/\\/[^ ]+$/.test($json.supabase_base_url) && !$json.supabase_base_url.includes('YOUR_') }}",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "cf-followup-config-error",
+      "name": "Follow-up Configuration Missing",
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        680,
+        300
+      ],
+      "parameters": {
+        "errorType": "errorMessage",
+        "errorMessage": "Client Finder owner IDs and Supabase base URL must be configured before follow-up preparation."
+      }
+    },
+    {
+      "id": "cf-followup-request",
+      "name": "Prepare Due Follow-ups",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        680,
+        80
+      ],
+      "notesInFlow": true,
+      "notes": "Internal service uses the database for confirmed initial sends at least five Asia/Manila weekdays old, with no reply, bounce, opt-out, suppression or existing follow-up. It creates a stored draft and returns cards. No Gmail action occurs here.",
+      "parameters": {
+        "method": "POST",
+        "url": "http://client-finder:8088/followups/due",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "{\"limit\":5}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          },
+          "timeout": 120000
+        }
+      },
+      "credentials": {
+        "httpBearerAuth": {
+          "name": "CLIENT_FINDER_SERVICE_AUTH"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "cf-followup-diagnostics-check",
+      "name": "Follow-up Diagnostics?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        900,
+        -160
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "cf-followup-has-diagnostics",
+              "leftValue": "={{ $json.status === 'needs_attention' || (Array.isArray($json.diagnostics) && $json.diagnostics.length > 0) }}",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "cf-followup-diagnostics-alert",
+      "name": "Alert: Follow-up Research Needs Review",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1120,
+        -220
+      ],
+      "parameters": {
+        "resource": "message",
+        "operation": "sendMessage",
+        "chatId": "={{ $('Follow-up Owner Configuration').first().json.chat_id }}",
+        "text": "={{ 'Client Finder follow-up preparation needs review: ' + ($json.diagnostics || []).map(String).join('; ').slice(0, 1200) }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "disable_web_page_preview": true
+        }
+      },
+      "credentials": {
+        "telegramApi": {
+          "name": "CLIENT_FINDER_TELEGRAM_BOT"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "cf-followup-split",
+      "name": "One Item per Follow-up Card",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        900,
+        80
+      ],
+      "parameters": {
+        "fieldToSplitOut": "cards",
+        "options": {}
+      }
+    },
+    {
+      "id": "cf-followup-card-check",
+      "name": "Stored Follow-up Card Complete?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1120,
+        80
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "cf-card-valid",
+              "leftValue": "={{ typeof $json.message_id === 'string' && /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test($json.message_id) && /^[1-9][0-9]*$/.test(String($json.revision)) && String($json.revision).length <= 10 && Number.isInteger(Number($json.revision)) && $json.kind === 'followup' && typeof $json.card_text === 'string' && $json.card_text.trim().length > 0 && $json.card_text.length <= 4096 && ['approve','edit','skip','dnc'].every(action => ('cf:' + action + ':' + $json.message_id + ':' + $json.revision).length <= 64) }}",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "cf-followup-card-error",
+      "name": "Incomplete Follow-up Card",
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        1340,
+        240
+      ],
+      "parameters": {
+        "errorType": "errorMessage",
+        "errorMessage": "Follow-up service returned an incomplete stored card. No card was posted."
+      }
+    },
+    {
+      "id": "cf-followup-telegram",
+      "name": "Post Exact Follow-up Card",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1340,
+        20
+      ],
+      "notesInFlow": true,
+      "notes": "Posts the exact stored follow-up draft via the dedicated Client Finder bot. Fresh approval is required. The callback workflow validates owner, card ID, and revision before any send attempt.",
+      "parameters": {
+        "resource": "message",
+        "operation": "sendMessage",
+        "chatId": "={{ $('Follow-up Owner Configuration').first().json.chat_id }}",
+        "text": "={{ $json.card_text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') }}",
+        "replyMarkup": "inlineKeyboard",
+        "inlineKeyboard": {
+          "rows": [
+            {
+              "row": {
+                "buttons": [
+                  {
+                    "text": "Approve & send",
+                    "additionalFields": {
+                      "callback_data": "={{ 'cf:approve:' + $json.message_id + ':' + $json.revision }}"
+                    }
+                  },
+                  {
+                    "text": "Edit",
+                    "additionalFields": {
+                      "callback_data": "={{ 'cf:edit:' + $json.message_id + ':' + $json.revision }}"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "row": {
+                "buttons": [
+                  {
+                    "text": "Skip",
+                    "additionalFields": {
+                      "callback_data": "={{ 'cf:skip:' + $json.message_id + ':' + $json.revision }}"
+                    }
+                  },
+                  {
+                    "text": "Do not contact",
+                    "additionalFields": {
+                      "callback_data": "={{ 'cf:dnc:' + $json.message_id + ':' + $json.revision }}"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "additionalFields": {
+          "appendAttribution": false,
+          "disable_web_page_preview": true,
+          "parse_mode": "HTML"
+        }
+      },
+      "credentials": {
+        "telegramApi": {
+          "name": "CLIENT_FINDER_TELEGRAM_BOT"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "cf-followup-telegram-check",
+      "name": "Follow-up Telegram Card ID Returned?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1560,
+        20
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "cf-telegram-valid",
+              "leftValue": "={{ Number.isInteger(Number($json.result?.message_id ?? $json.message_id)) && Number($json.result?.message_id ?? $json.message_id) > 0 && String($json.result?.chat?.id ?? $json.chat?.id) === $('Follow-up Owner Configuration').first().json.chat_id }}",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "cf-followup-telegram-error",
+      "name": "Follow-up Telegram Result Needs Checking",
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        1780,
+        180
+      ],
+      "parameters": {
+        "errorType": "errorMessage",
+        "errorMessage": "Telegram did not return a valid follow-up card ID. Check the bot conversation before retrying."
+      }
+    },
+    {
+      "id": "cf-followup-bind",
+      "name": "Bind Follow-up Card in Supabase",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1780,
+        -40
+      ],
+      "notesInFlow": true,
+      "notes": "Binds the Telegram message ID to the stored follow-up revision. Only the configured owner may approve a bound card.",
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Follow-up Owner Configuration').first().json.supabase_base_url + '/rest/v1/rpc/client_finder_bind_card' }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpCustomAuth",
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ { message_id: $('One Item per Follow-up Card').item.json.message_id, revision: Number($('One Item per Follow-up Card').item.json.revision), owner_user_id: Number($('Follow-up Owner Configuration').first().json.owner_user_id), chat_id: Number($json.result?.chat?.id ?? $json.chat?.id), card_id: Number($json.result?.message_id ?? $json.message_id) } }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          },
+          "timeout": 20000
+        }
+      },
+      "credentials": {
+        "httpCustomAuth": {
+          "name": "CLIENT_FINDER_SUPABASE_REST_AUTH"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "cf-followup-error-14",
+      "name": "Alert: Follow-up Service Failed",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        900,
+        340
+      ],
+      "parameters": {
+        "resource": "message",
+        "operation": "sendMessage",
+        "chatId": "={{ $('Follow-up Owner Configuration').first().json.chat_id }}",
+        "text": "Client Finder could not prepare due follow-up drafts. No new follow-up cards were posted. Check the internal service and database settings.",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "HTML",
+          "disable_web_page_preview": true
+        }
+      },
+      "credentials": {
+        "telegramApi": {
+          "name": "CLIENT_FINDER_TELEGRAM_BOT"
+        }
+      }
+    },
+    {
+      "id": "cf-followup-error-15",
+      "name": "Alert: Follow-up Card Unbound",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2000,
+        360
+      ],
+      "parameters": {
+        "resource": "message",
+        "operation": "sendMessage",
+        "chatId": "={{ $('Follow-up Owner Configuration').first().json.chat_id }}",
+        "text": "Client Finder posted a follow-up card but could not bind it to the stored draft. That card cannot authorize sending. Check the bot conversation and database before retrying.",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "HTML",
+          "disable_web_page_preview": true
+        }
+      },
+      "credentials": {
+        "telegramApi": {
+          "name": "CLIENT_FINDER_TELEGRAM_BOT"
+        }
+      }
+    },
+    {
+      "id": "cf-followup-error-16",
+      "name": "Stop: Follow-up Preparation Failed",
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        1120,
+        340
+      ],
+      "parameters": {
+        "errorType": "errorMessage",
+        "errorMessage": "Follow-up preparation failed; no draft can be approved."
+      }
+    },
+    {
+      "id": "cf-followup-error-17",
+      "name": "Stop: Follow-up Card Unbound",
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        2220,
+        360
+      ],
+      "parameters": {
+        "errorType": "errorMessage",
+        "errorMessage": "Follow-up card binding failed; the visible card is not approvable."
+      }
+    },
+    {
+      "id": "cf-followup-error-18",
+      "name": "Stop: Follow-up Telegram Failed",
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        1560,
+        360
+      ],
+      "parameters": {
+        "errorType": "errorMessage",
+        "errorMessage": "Dedicated Telegram bot did not confirm a follow-up card; check bot credentials."
+      }
+    }
+  ],
+  "connections": {
+    "Daily 08:20 Manila": {
+      "main": [
+        [
+          {
+            "node": "Follow-up Owner Configuration",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Follow-ups Manually": {
+      "main": [
+        [
+          {
+            "node": "Follow-up Owner Configuration",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Follow-up Owner Configuration": {
+      "main": [
+        [
+          {
+            "node": "Follow-up Configuration Ready?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Follow-up Configuration Ready?": {
+      "main": [
+        [
+          {
+            "node": "Prepare Due Follow-ups",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Follow-up Configuration Missing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Due Follow-ups": {
+      "main": [
+        [
+          {
+            "node": "Follow-up Diagnostics?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Alert: Follow-up Service Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "One Item per Follow-up Card": {
+      "main": [
+        [
+          {
+            "node": "Stored Follow-up Card Complete?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stored Follow-up Card Complete?": {
+      "main": [
+        [
+          {
+            "node": "Post Exact Follow-up Card",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Incomplete Follow-up Card",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Post Exact Follow-up Card": {
+      "main": [
+        [
+          {
+            "node": "Follow-up Telegram Card ID Returned?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Stop: Follow-up Telegram Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Follow-up Telegram Card ID Returned?": {
+      "main": [
+        [
+          {
+            "node": "Bind Follow-up Card in Supabase",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Follow-up Telegram Result Needs Checking",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Bind Follow-up Card in Supabase": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Alert: Follow-up Card Unbound",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Alert: Follow-up Service Failed": {
+      "main": [
+        [
+          {
+            "node": "Stop: Follow-up Preparation Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Alert: Follow-up Card Unbound": {
+      "main": [
+        [
+          {
+            "node": "Stop: Follow-up Card Unbound",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Follow-up Diagnostics?": {
+      "main": [
+        [
+          {
+            "node": "Alert: Follow-up Research Needs Review",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "One Item per Follow-up Card",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "One Item per Follow-up Card",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Asia/Manila",
+    "saveDataErrorExecution": "none",
+    "saveDataSuccessExecution": "none",
+    "saveManualExecutions": false,
+    "saveExecutionProgress": false
+  },
+  "pinData": {}
+}

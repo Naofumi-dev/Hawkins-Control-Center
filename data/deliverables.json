@@ -1,0 +1,46 @@
+[
+  {
+    "id": "client_application",
+    "signals": ["client portal", "customer portal", "web app", "internal tool", "application development"],
+    "signal_label": "application and portal work",
+    "deliverable": "a small client portal or internal tool with a clear review step",
+    "proof_title": "Workline",
+    "proof_id": "workline",
+    "proof_claim": "I built an application desk for intake, review, and follow-up; its public preview shows the interface",
+    "proof_url": "https://armageddonvivas.cloud/work/workline",
+    "proof_status": "public preview"
+  },
+  {
+    "id": "proposal_preparation",
+    "signals": ["proposal", "sales document", "scope of work", "statement of work"],
+    "signal_label": "proposal preparation",
+    "deliverable": "a system that prepares a proposal draft from approved project notes and keeps the lead record current",
+    "proof_title": "Post-Call Proposal Builder",
+    "proof_id": "proposal-agent",
+    "proof_claim": "I built an n8n workflow that prepares reviewable proposal drafts from approved call context",
+    "proof_url": "https://armageddonvivas.cloud/work/proposal-agent",
+    "proof_status": "built workflow"
+  },
+  {
+    "id": "lead_follow_up",
+    "signals": ["lead generation", "lead intake", "appointment booking", "booking reminders", "go high level", "gohighlevel", "crm automation"],
+    "signal_label": "lead handling and booking",
+    "deliverable": "a lead intake and follow-up system with reminders and a clear handoff to your team",
+    "proof_title": "Lead Management and Recovery System",
+    "proof_id": "lead-intake-recovery",
+    "proof_claim": "I built GoHighLevel workflows for intake, qualification, reminders, missed calls, and no-shows",
+    "proof_url": "https://armageddonvivas.cloud/work/lead-intake-recovery",
+    "proof_status": "built system"
+  },
+  {
+    "id": "document_assistant",
+    "signals": ["rfp", "request for proposal", "knowledge base", "document assistant", "document workflow"],
+    "signal_label": "document and RFP work",
+    "deliverable": "an assistant that gathers approved evidence and prepares a cited draft for human review",
+    "proof_title": "RFP Response Assistant",
+    "proof_id": "rfp-response-assistant",
+    "proof_claim": "I prototyped a workflow that validates RFP intake, uses approved evidence, and stops at human review",
+    "proof_url": "https://armageddonvivas.cloud/work/rfp-response-assistant",
+    "proof_status": "prototype"
+  }
+]

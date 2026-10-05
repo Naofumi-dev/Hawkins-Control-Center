@@ -1,0 +1,15 @@
+**/._*
+**/.DS_Store
+**/__pycache__/
+**/*.pyc
+.env
+**/.env
+**/.env.*
+**/node_modules/
+**/dist/
+**/artifacts/
+mockups/
+*.tgz
+tests/
+workflows/
+db/

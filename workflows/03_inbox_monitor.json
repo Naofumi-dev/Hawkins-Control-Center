@@ -1,0 +1,1173 @@
+{
+  "name": "Hawkins \u2014 Nancy (Client Finder Inbox Monitor)",
+  "active": false,
+  "nodes": [
+    {
+      "id": "cf-mail-01",
+      "name": "Every 10 Minutes",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 10
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "cf-mail-02",
+      "name": "Run Mail Poll Manually",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        260
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "cf-mail-03",
+      "name": "Monitor Configuration",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        220,
+        130
+      ],
+      "parameters": {
+        "mode": "manual",
+        "includeOtherFields": false,
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cf-mail-owner-chat",
+              "name": "owner_chat_id",
+              "type": "string",
+              "value": "YOUR_CLIENT_FINDER_TELEGRAM_PRIVATE_CHAT_ID"
+            },
+            {
+              "id": "cf-mail-supabase",
+              "name": "supabase_base_url",
+              "type": "string",
+              "value": "https://mtdavgadkiiofwikzdtn.supabase.co"
+            },
+            {
+              "id": "cf-mail-backfill",
+              "name": "backfill_start_utc",
+              "type": "string",
+              "value": "YOUR_FIRST_OUTREACH_BACKFILL_START_ISO_UTC"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "notesInFlow": true,
+      "notes": "Set the private owner chat and a UTC backfill start no later than the first confirmed Client Finder send; confirm the prefilled Hawkins Supabase URL. Use a dedicated Client Finder Telegram bot. The Hawkins Supabase REST credential holds apikey and Bearer headers, and the internal service Bearer credential holds its token. Keep inactive until Gmail inbox monitoring is validated against a controlled reply, bounce, and opt-out."
+    },
+    {
+      "id": "cf-mail-04",
+      "name": "Monitor Configuration Ready?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        440,
+        130
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "cf-mail-condition",
+              "leftValue": "={{ /^-?[0-9]+$/.test($json.owner_chat_id) && /^https:\\/\\/[^ ]+$/.test($json.supabase_base_url) && !$json.supabase_base_url.includes('YOUR_') && /^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?Z$/.test($json.backfill_start_utc) && Number.isFinite(Date.parse($json.backfill_start_utc)) && Date.parse($json.backfill_start_utc) < Date.now() }}",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "cf-mail-05",
+      "name": "Stop: Monitor Setup Missing",
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        660,
+        330
+      ],
+      "parameters": {
+        "errorType": "errorMessage",
+        "errorMessage": "Configure owner chat, Supabase URL, and UTC backfill start before mail polling."
+      }
+    },
+    {
+      "id": "cf-mail-06",
+      "name": "Load Durable Mail Checkpoint",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        660,
+        70
+      ],
+      "parameters": {
+        "method": "GET",
+        "url": "={{ $('Monitor Configuration').first().json.supabase_base_url + '/rest/v1/client_finder_mail_monitor_state?select=scanned_through&id=eq.1' }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpCustomAuth",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          },
+          "timeout": 20000
+        }
+      },
+      "credentials": {
+        "httpCustomAuth": {
+          "name": "CLIENT_FINDER_SUPABASE_REST_AUTH"
+        }
+      },
+      "onError": "continueErrorOutput",
+      "alwaysOutputData": true,
+      "notesInFlow": true,
+      "notes": "Reads the single durable checkpoint. Do not replace with n8n static data; gap detection and sending freshness are enforced in Supabase."
+    },
+    {
+      "id": "cf-mail-07",
+      "name": "Checkpoint Row Found?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        880,
+        70
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "cf-mail-condition",
+              "leftValue": "={{ Object.prototype.hasOwnProperty.call($json, 'scanned_through') }}",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "cf-mail-08",
+      "name": "Prepare One-Hour Poll Window",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1100,
+        10
+      ],
+      "parameters": {
+        "mode": "manual",
+        "includeOtherFields": false,
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cf-mail-since",
+              "name": "scanned_since",
+              "type": "string",
+              "value": "={{ $json.scanned_through ? new Date(Date.parse($json.scanned_through) - 10 * 60 * 1000).toISOString() : $('Monitor Configuration').first().json.backfill_start_utc }}"
+            },
+            {
+              "id": "cf-mail-until",
+              "name": "scanned_until",
+              "type": "string",
+              "value": "={{ new Date(Math.min(Date.now(), Date.parse($json.scanned_through ? new Date(Date.parse($json.scanned_through) - 10 * 60 * 1000).toISOString() : $('Monitor Configuration').first().json.backfill_start_utc) + 60 * 60 * 1000)).toISOString() }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "notesInFlow": true,
+      "notes": "Scan one hour at a time with a ten-minute overlap. The backend deduplicates by Gmail message ID. After an outage, successive polls catch up while sending remains blocked until the checkpoint is fresh."
+    },
+    {
+      "id": "cf-mail-09",
+      "name": "Poll Window Valid?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1320,
+        10
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "cf-mail-condition",
+              "leftValue": "={{ Number.isFinite(Date.parse($json.scanned_since)) && Number.isFinite(Date.parse($json.scanned_until)) && Date.parse($json.scanned_until) > Date.parse($json.scanned_since) && Date.parse($json.scanned_until) <= Date.now() + 60000 }}",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "cf-mail-10",
+      "name": "Fetch Gmail Window",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1540,
+        -50
+      ],
+      "parameters": {
+        "resource": "message",
+        "operation": "getAll",
+        "returnAll": false,
+        "limit": 251,
+        "simple": false,
+        "filters": {
+          "q": "in:anywhere -in:spam -in:trash -in:sent -in:drafts",
+          "includeSpamTrash": false,
+          "readStatus": "both",
+          "receivedAfter": "={{ $('Prepare One-Hour Poll Window').first().json.scanned_since }}",
+          "receivedBefore": "={{ $('Prepare One-Hour Poll Window').first().json.scanned_until }}"
+        },
+        "options": {
+          "downloadAttachments": false
+        }
+      },
+      "credentials": {
+        "gmailOAuth2": {
+          "name": "CLIENT_FINDER_GMAIL"
+        }
+      },
+      "onError": "continueErrorOutput",
+      "alwaysOutputData": true,
+      "notesInFlow": true,
+      "notes": "Reads both read and unread inbound mail, including spam/trash, without changing Gmail labels. 251 results indicate a possibly truncated window; the workflow refuses to checkpoint it. Do not enable without checking the OAuth credential and sample payloads."
+    },
+    {
+      "id": "cf-mail-11",
+      "name": "Aggregate Full Gmail Messages",
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        1760,
+        -50
+      ],
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "destinationFieldName": "gmail_messages",
+        "options": {}
+      }
+    },
+    {
+      "id": "cf-mail-12",
+      "name": "Batch At Most 250?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1980,
+        -50
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "cf-mail-condition",
+              "leftValue": "={{ Array.isArray($json.gmail_messages) && $json.gmail_messages.length <= 250 }}",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "cf-mail-13",
+      "name": "Process and Checkpoint Mail Poll",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2200,
+        -130
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "http://client-finder:8088/mail-poll",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ { gmail_messages: ($json.gmail_messages.length === 1 && $json.gmail_messages[0] && Object.keys($json.gmail_messages[0]).length === 0 ? [] : $json.gmail_messages), scanned_since: $('Prepare One-Hour Poll Window').first().json.scanned_since, scanned_until: $('Prepare One-Hour Poll Window').first().json.scanned_until } }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          },
+          "timeout": 120000
+        }
+      },
+      "credentials": {
+        "httpBearerAuth": {
+          "name": "CLIENT_FINDER_SERVICE_AUTH"
+        }
+      },
+      "onError": "continueErrorOutput",
+      "notesInFlow": true,
+      "notes": "The internal service parses MIME/DSNs, matches exact stored Gmail thread and sender/contact, records deduplicated events, then advances the SQL checkpoint only after every message is processed. Only n8n's single empty {} no-results placeholder is sent as []. Every other fetched item, even malformed, is passed through for fail-closed validation. No outbound email is sent."
+    },
+    {
+      "id": "cf-mail-14",
+      "name": "Poll Completed?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2420,
+        -130
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "cf-mail-condition",
+              "leftValue": "={{ $json.status === 'complete' && Array.isArray($json.results) && $json.checkpoint && typeof $json.checkpoint === 'object' }}",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "cf-mail-15",
+      "name": "Alert: Mail Needs Checking",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2640,
+        -10
+      ],
+      "parameters": {
+        "resource": "message",
+        "operation": "sendMessage",
+        "chatId": "={{ $('Monitor Configuration').first().json.owner_chat_id }}",
+        "text": "={{ 'Client Finder inbox needs checking. Sending is paused.\\nGmail ID: ' + String($json.gmail_id || 'unavailable').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').slice(0,120) + '\\nReason: ' + String($json.reason || 'poll did not complete').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').slice(0,160) }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "HTML",
+          "disable_web_page_preview": true
+        }
+      },
+      "credentials": {
+        "telegramApi": {
+          "name": "CLIENT_FINDER_TELEGRAM_BOT"
+        }
+      },
+      "notesInFlow": true,
+      "notes": "Owner-visible only; do not include the email body. A needs_checking response has not advanced the checkpoint."
+    },
+    {
+      "id": "cf-mail-16",
+      "name": "Stop: Mail Needs Checking",
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        2860,
+        -10
+      ],
+      "parameters": {
+        "errorType": "errorMessage",
+        "errorMessage": "Mail poll did not checkpoint. Review the owner alert before enabling sending."
+      }
+    },
+    {
+      "id": "cf-mail-17",
+      "name": "Alert: Mail Monitor Failed",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2200,
+        230
+      ],
+      "parameters": {
+        "resource": "message",
+        "operation": "sendMessage",
+        "chatId": "={{ $('Monitor Configuration').first().json.owner_chat_id }}",
+        "text": "Client Finder inbox poll failed or exceeded its safe window. Sending stays blocked until the poll is repaired and catches up. Check Gmail and service credentials, then run the poll again.",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "HTML",
+          "disable_web_page_preview": true
+        }
+      },
+      "credentials": {
+        "telegramApi": {
+          "name": "CLIENT_FINDER_TELEGRAM_BOT"
+        }
+      },
+      "notesInFlow": true,
+      "notes": "Generic owner-only alert; raw Gmail content and provider errors are intentionally omitted."
+    },
+    {
+      "id": "cf-mail-18",
+      "name": "Stop: Mail Poll Failed",
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        2420,
+        230
+      ],
+      "parameters": {
+        "errorType": "errorMessage",
+        "errorMessage": "Mail monitor failed before a verified checkpoint. Review Gmail, service, and Supabase status."
+      }
+    },
+    {
+      "id": "cf-stale-19",
+      "name": "Every 5 Minutes: Stale Sends",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        620
+      ],
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 5
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "cf-stale-20",
+      "name": "Mark Stale Send Attempts",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        440,
+        620
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Stale Sweep Configuration').first().json.supabase_base_url + '/rest/v1/rpc/client_finder_mark_stale_attempts' }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpCustomAuth",
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "{}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          },
+          "timeout": 20000
+        }
+      },
+      "credentials": {
+        "httpCustomAuth": {
+          "name": "CLIENT_FINDER_SUPABASE_REST_AUTH"
+        }
+      },
+      "onError": "continueErrorOutput",
+      "notesInFlow": true,
+      "notes": "Independent five-minute safety sweep. Claimed/sending attempts older than ten minutes become send_unknown; they cannot be automatically resent. Requires the Supabase RPC to return {count:<integer>}."
+    },
+    {
+      "id": "cf-stale-21",
+      "name": "Any Stale Attempts?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        660,
+        560
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "cf-stale-count",
+              "leftValue": "={{ Number.isInteger(Number($json.count)) && Number($json.count) > 0 }}",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "cf-stale-22",
+      "name": "Alert: Uncertain Gmail Send",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        880,
+        500
+      ],
+      "parameters": {
+        "resource": "message",
+        "operation": "sendMessage",
+        "chatId": "={{ $('Stale Sweep Configuration').first().json.owner_chat_id }}",
+        "text": "={{ 'Client Finder has ' + Number($json.count) + ' uncertain Gmail send attempt(s). Check Gmail Sent and reconcile them manually. No automatic resend will occur.' }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "HTML",
+          "disable_web_page_preview": true
+        }
+      },
+      "credentials": {
+        "telegramApi": {
+          "name": "CLIENT_FINDER_TELEGRAM_BOT"
+        }
+      }
+    },
+    {
+      "id": "cf-stale-23",
+      "name": "Alert: Stale Sweep Failed",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        880,
+        720
+      ],
+      "parameters": {
+        "resource": "message",
+        "operation": "sendMessage",
+        "chatId": "={{ $('Stale Sweep Configuration').first().json.owner_chat_id }}",
+        "text": "Client Finder could not check for stalled send attempts. Sending should stay disabled until the Supabase RPC is repaired.",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "HTML",
+          "disable_web_page_preview": true
+        }
+      },
+      "credentials": {
+        "telegramApi": {
+          "name": "CLIENT_FINDER_TELEGRAM_BOT"
+        }
+      }
+    },
+    {
+      "id": "cf-stale-24",
+      "name": "Stop: Stale Sweep Failed",
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        1100,
+        720
+      ],
+      "parameters": {
+        "errorType": "errorMessage",
+        "errorMessage": "Stale send-attempt safety sweep failed."
+      }
+    },
+    {
+      "id": "cf-stale-25",
+      "name": "Stale Sweep Configuration",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        220,
+        620
+      ],
+      "parameters": {
+        "mode": "manual",
+        "includeOtherFields": false,
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cf-stale-chat",
+              "name": "owner_chat_id",
+              "type": "string",
+              "value": "YOUR_CLIENT_FINDER_TELEGRAM_PRIVATE_CHAT_ID"
+            },
+            {
+              "id": "cf-stale-supabase",
+              "name": "supabase_base_url",
+              "type": "string",
+              "value": "https://mtdavgadkiiofwikzdtn.supabase.co"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "notesInFlow": true,
+      "notes": "Configure independently of the inbox poll path. Uses the same dedicated bot and Supabase REST credential."
+    },
+    {
+      "id": "cf-stale-26",
+      "name": "Stale Sweep Configuration Ready?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        330,
+        780
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "cf-stale-count",
+              "leftValue": "={{ /^-?[0-9]+$/.test($json.owner_chat_id) && /^https:\\/\\/[^ ]+$/.test($json.supabase_base_url) && !$json.supabase_base_url.includes('YOUR_') }}",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "cf-stale-count-valid",
+      "name": "Stale Sweep Count Valid?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        610,
+        710
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "cf-stale-valid",
+              "leftValue": "={{ Number.isInteger(Number($json.count)) && Number($json.count) >= 0 }}",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "cf-personal-monitor-profile",
+      "name": "Verify Personal Mailbox",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1000,
+        100
+      ],
+      "parameters": {
+        "method": "GET",
+        "url": "https://gmail.googleapis.com/gmail/v1/users/me/profile",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "gmailOAuth2",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          },
+          "timeout": 20000
+        }
+      },
+      "credentials": {
+        "gmailOAuth2": {
+          "name": "CLIENT_FINDER_GMAIL"
+        }
+      },
+      "alwaysOutputData": true,
+      "retryOnFail": false,
+      "onError": "continueErrorOutput",
+      "notesInFlow": true,
+      "notes": "Bind the same personal Gmail OAuth credential as the send node. Only armageddonvivas@gmail.com is allowed, regardless of the configured sender."
+    },
+    {
+      "id": "cf-personal-monitor-identity",
+      "name": "Personal Mailbox Verified?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1200,
+        100
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "check",
+              "leftValue": "={{ typeof $json.emailAddress === 'string' && $json.emailAddress.trim().toLowerCase() === 'armageddonvivas@gmail.com' }}",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ]
+        },
+        "options": {}
+      }
+    }
+  ],
+  "connections": {
+    "Every 10 Minutes": {
+      "main": [
+        [
+          {
+            "node": "Monitor Configuration",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run Mail Poll Manually": {
+      "main": [
+        [
+          {
+            "node": "Monitor Configuration",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Monitor Configuration": {
+      "main": [
+        [
+          {
+            "node": "Monitor Configuration Ready?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Monitor Configuration Ready?": {
+      "main": [
+        [
+          {
+            "node": "Load Durable Mail Checkpoint",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Stop: Monitor Setup Missing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Load Durable Mail Checkpoint": {
+      "main": [
+        [
+          {
+            "node": "Checkpoint Row Found?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Alert: Mail Monitor Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Checkpoint Row Found?": {
+      "main": [
+        [
+          {
+            "node": "Prepare One-Hour Poll Window",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Alert: Mail Monitor Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare One-Hour Poll Window": {
+      "main": [
+        [
+          {
+            "node": "Poll Window Valid?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Poll Window Valid?": {
+      "main": [
+        [
+          {
+            "node": "Verify Personal Mailbox",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Alert: Mail Monitor Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Gmail Window": {
+      "main": [
+        [
+          {
+            "node": "Aggregate Full Gmail Messages",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Alert: Mail Monitor Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate Full Gmail Messages": {
+      "main": [
+        [
+          {
+            "node": "Batch At Most 250?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Batch At Most 250?": {
+      "main": [
+        [
+          {
+            "node": "Process and Checkpoint Mail Poll",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Alert: Mail Monitor Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process and Checkpoint Mail Poll": {
+      "main": [
+        [
+          {
+            "node": "Poll Completed?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Alert: Mail Monitor Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Poll Completed?": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Alert: Mail Needs Checking",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Alert: Mail Needs Checking": {
+      "main": [
+        [
+          {
+            "node": "Stop: Mail Needs Checking",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Alert: Mail Monitor Failed": {
+      "main": [
+        [
+          {
+            "node": "Stop: Mail Poll Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Every 5 Minutes: Stale Sends": {
+      "main": [
+        [
+          {
+            "node": "Stale Sweep Configuration",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stale Sweep Configuration": {
+      "main": [
+        [
+          {
+            "node": "Stale Sweep Configuration Ready?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stale Sweep Configuration Ready?": {
+      "main": [
+        [
+          {
+            "node": "Mark Stale Send Attempts",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Stop: Stale Sweep Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mark Stale Send Attempts": {
+      "main": [
+        [
+          {
+            "node": "Stale Sweep Count Valid?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Alert: Stale Sweep Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Any Stale Attempts?": {
+      "main": [
+        [
+          {
+            "node": "Alert: Uncertain Gmail Send",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Alert: Stale Sweep Failed": {
+      "main": [
+        [
+          {
+            "node": "Stop: Stale Sweep Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stale Sweep Count Valid?": {
+      "main": [
+        [
+          {
+            "node": "Any Stale Attempts?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Alert: Stale Sweep Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Verify Personal Mailbox": {
+      "main": [
+        [
+          {
+            "node": "Personal Mailbox Verified?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Alert: Mail Monitor Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Personal Mailbox Verified?": {
+      "main": [
+        [
+          {
+            "node": "Fetch Gmail Window",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Alert: Mail Monitor Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Asia/Manila",
+    "saveDataErrorExecution": "none",
+    "saveDataSuccessExecution": "none",
+    "saveManualExecutions": false,
+    "saveExecutionProgress": false
+  },
+  "pinData": {}
+}

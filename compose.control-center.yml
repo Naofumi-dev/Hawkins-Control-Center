@@ -1,0 +1,20 @@
+# Optional public gateway. Use only after the personal host and DNS are verified.
+# docker compose -f compose.client-finder.yml -f compose.control-center.yml ...
+services:
+  control-center-web:
+    image: nginx:1.28-alpine
+    restart: unless-stopped
+    depends_on:
+      client-finder:
+        condition: service_healthy
+    volumes:
+      - ./deploy/control-center.nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    networks:
+      - hawkins_n8n
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.hawkins-personal.rule=Host(`${HAWKINS_CONTROL_HOST:?Set the reviewed personal hostname}`)
+      - traefik.http.routers.hawkins-personal.entrypoints=websecure
+      - traefik.http.routers.hawkins-personal.tls=true
+      - traefik.http.routers.hawkins-personal.tls.certresolver=${HAWKINS_CERT_RESOLVER:-letsencrypt}
+      - traefik.http.services.hawkins-personal.loadbalancer.server.port=80

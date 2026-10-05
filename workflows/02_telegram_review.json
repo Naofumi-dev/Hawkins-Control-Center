@@ -1,0 +1,2833 @@
+{
+  "id": "cfTelegramReviewSend01",
+  "name": "Hawkins \u2014 Hopper (Client Finder Review and Send)",
+  "active": false,
+  "nodes": [
+    {
+      "id": "cf-review-trigger",
+      "name": "Client Finder Telegram Updates",
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        100
+      ],
+      "parameters": {
+        "updates": [
+          "callback_query",
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "credentials": {
+        "telegramApi": {
+          "name": "CLIENT_FINDER_TELEGRAM_BOT"
+        }
+      },
+      "webhookId": "e713c754-636d-4dc2-b9c4-3d7c1c83b122"
+    },
+    {
+      "id": "cf-review-config",
+      "name": "Owner Configuration",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        220,
+        100
+      ],
+      "parameters": {
+        "mode": "manual",
+        "includeOtherFields": true,
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cf-review-config-0",
+              "name": "owner_user_id",
+              "type": "string",
+              "value": "YOUR_CLIENT_FINDER_TELEGRAM_USER_ID"
+            },
+            {
+              "id": "cf-review-config-1",
+              "name": "chat_id",
+              "type": "string",
+              "value": "YOUR_CLIENT_FINDER_TELEGRAM_PRIVATE_CHAT_ID"
+            },
+            {
+              "id": "cf-review-config-2",
+              "name": "supabase_base_url",
+              "type": "string",
+              "value": "https://mtdavgadkiiofwikzdtn.supabase.co"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "notesInFlow": true,
+      "notes": "Dedicated Client Finder bot only. Set owner IDs and confirm the prefilled Hawkins Supabase URL; select verified Client Finder Telegram, Hawkins Supabase Custom Auth (apikey + Authorization headers), Gmail OAuth2, and internal service Bearer Auth credentials. Configure a user-owned independent n8n error workflow before activation. Keep inactive until live inbox and sender checks pass."
+    },
+    {
+      "id": "cf-review-config-valid",
+      "name": "Owner Configuration Ready?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        440,
+        100
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "check",
+              "leftValue": "={{ /^[0-9]+$/.test($json.owner_user_id) && /^-?[0-9]+$/.test($json.chat_id) && /^https:\\/\\/[^ ]+$/.test($json.supabase_base_url) && !$json.supabase_base_url.includes('YOUR_') }}",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "cf-review-config-error",
+      "name": "Configuration Missing",
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        660,
+        300
+      ],
+      "parameters": {
+        "errorType": "errorMessage",
+        "errorMessage": "Client Finder owner IDs and Supabase URL must be configured."
+      }
+    },
+    {
+      "id": "cf-review-update-route",
+      "name": "Callback or Message?",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3,
+      "position": [
+        660,
+        40
+      ],
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose",
+                  "version": 1
+                },
+                "combinator": "and",
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.callback_query ? 'callback' : ($json.message ? 'message' : 'other') }}",
+                    "rightValue": "callback",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ]
+              },
+              "renameOutput": true,
+              "outputKey": "callback"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose",
+                  "version": 1
+                },
+                "combinator": "and",
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.callback_query ? 'callback' : ($json.message ? 'message' : 'other') }}",
+                    "rightValue": "message",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ]
+              },
+              "renameOutput": true,
+              "outputKey": "message"
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "cf-review-callback-valid",
+      "name": "Owner and Callback Valid?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        880,
+        -100
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "check",
+              "leftValue": "={{ String($json.callback_query?.from?.id) === $json.owner_user_id && String($json.callback_query?.message?.chat?.id) === $json.chat_id && $json.callback_query?.message?.chat?.type === 'private' && Number($json.callback_query?.message?.message_id) > 0 && /^cf:(approve|edit|skip|dnc):([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}):([1-9][0-9]{0,9})$/.test($json.callback_query?.data || '') }}",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "cf-review-callback-reject",
+      "name": "Unauthorized or Stale Callback",
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        1100,
+        80
+      ],
+      "parameters": {
+        "errorType": "errorMessage",
+        "errorMessage": "Telegram callback was not from the configured owner/chat or has an invalid action payload."
+      }
+    },
+    {
+      "id": "cf-review-parse-callback",
+      "name": "Parsed Callback",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1100,
+        -180
+      ],
+      "parameters": {
+        "mode": "manual",
+        "includeOtherFields": false,
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cf-review-parse-callback-0",
+              "name": "action",
+              "type": "string",
+              "value": "={{ $json.callback_query.data.split(':')[1] }}"
+            },
+            {
+              "id": "cf-review-parse-callback-1",
+              "name": "message_id",
+              "type": "string",
+              "value": "={{ $json.callback_query.data.split(':')[2] }}"
+            },
+            {
+              "id": "cf-review-parse-callback-2",
+              "name": "revision",
+              "type": "string",
+              "value": "={{ $json.callback_query.data.split(':')[3] }}"
+            },
+            {
+              "id": "cf-review-parse-callback-3",
+              "name": "owner_user_id",
+              "type": "string",
+              "value": "={{ String($json.callback_query.from.id) }}"
+            },
+            {
+              "id": "cf-review-parse-callback-4",
+              "name": "chat_id",
+              "type": "string",
+              "value": "={{ String($json.callback_query.message.chat.id) }}"
+            },
+            {
+              "id": "cf-review-parse-callback-5",
+              "name": "card_id",
+              "type": "string",
+              "value": "={{ String($json.callback_query.message.message_id) }}"
+            },
+            {
+              "id": "cf-review-parse-callback-6",
+              "name": "query_id",
+              "type": "string",
+              "value": "={{ $json.callback_query.id }}"
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "cf-review-ack",
+      "name": "Acknowledge Review Tap",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1320,
+        -180
+      ],
+      "parameters": {
+        "resource": "callback",
+        "operation": "answerQuery",
+        "queryId": "={{ $('Parsed Callback').item.json.query_id }}",
+        "additionalFields": {
+          "text": "Checking the saved review card."
+        }
+      },
+      "credentials": {
+        "telegramApi": {
+          "name": "CLIENT_FINDER_TELEGRAM_BOT"
+        }
+      },
+      "onError": "continueErrorOutput",
+      "notesInFlow": true,
+      "notes": "Acknowledging a Telegram button is informational. Review Action runs directly from the parsed owner callback and must not depend on this API call succeeding."
+    },
+    {
+      "id": "cf-review-ack-alert",
+      "name": "Tell Owner Callback Acknowledgment Failed",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1540,
+        -360
+      ],
+      "parameters": {
+        "resource": "message",
+        "operation": "sendMessage",
+        "chatId": "={{ $('Owner Configuration').first().json.chat_id }}",
+        "text": "Telegram could not acknowledge a Client Finder button tap. The saved review action is being processed separately; check its result before tapping again.",
+        "additionalFields": {
+          "appendAttribution": false,
+          "disable_web_page_preview": true,
+          "parse_mode": "HTML"
+        }
+      },
+      "credentials": {
+        "telegramApi": {
+          "name": "CLIENT_FINDER_TELEGRAM_BOT"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "cf-review-action-route",
+      "name": "Review Action",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3,
+      "position": [
+        1540,
+        -180
+      ],
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose",
+                  "version": 1
+                },
+                "combinator": "and",
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Parsed Callback').item.json.action }}",
+                    "rightValue": "approve",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ]
+              },
+              "renameOutput": true,
+              "outputKey": "approve"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose",
+                  "version": 1
+                },
+                "combinator": "and",
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Parsed Callback').item.json.action }}",
+                    "rightValue": "edit",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ]
+              },
+              "renameOutput": true,
+              "outputKey": "edit"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose",
+                  "version": 1
+                },
+                "combinator": "and",
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Parsed Callback').item.json.action }}",
+                    "rightValue": "skip",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ]
+              },
+              "renameOutput": true,
+              "outputKey": "skip"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose",
+                  "version": 1
+                },
+                "combinator": "and",
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Parsed Callback').item.json.action }}",
+                    "rightValue": "dnc",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ]
+              },
+              "renameOutput": true,
+              "outputKey": "dnc"
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "cf-review-claim",
+      "name": "Claim Approved Send",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1760,
+        -420
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Owner Configuration').first().json.supabase_base_url + '/rest/v1/rpc/client_finder_claim_send' }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpCustomAuth",
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ { message_id: $('Parsed Callback').item.json.message_id, revision: Number($('Parsed Callback').item.json.revision), owner_user_id: Number($('Parsed Callback').item.json.owner_user_id), chat_id: Number($('Parsed Callback').item.json.chat_id), card_id: Number($('Parsed Callback').item.json.card_id) } }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          },
+          "timeout": 20000
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/vnd.pgrst.object+json"
+            }
+          ]
+        }
+      },
+      "credentials": {
+        "httpCustomAuth": {
+          "name": "CLIENT_FINDER_SUPABASE_REST_AUTH"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "cf-review-begin",
+      "name": "Recheck and Begin Send",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1980,
+        -420
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Owner Configuration').first().json.supabase_base_url + '/rest/v1/rpc/client_finder_begin_send' }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpCustomAuth",
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ { attempt_id: $json.id } }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          },
+          "timeout": 20000
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/vnd.pgrst.object+json"
+            }
+          ]
+        }
+      },
+      "credentials": {
+        "httpCustomAuth": {
+          "name": "CLIENT_FINDER_SUPABASE_REST_AUTH"
+        }
+      },
+      "alwaysOutputData": true,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "cf-review-sending-valid",
+      "name": "Approved Attempt Still Sendable?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2200,
+        -420
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "check",
+              "leftValue": "={{ $json?.status === 'sending' && typeof $json.id === 'string' && typeof $json.recipient_email === 'string' && $json.recipient_email.includes('@') && typeof $json.subject === 'string' && $json.subject.length > 0 && typeof $json.body === 'string' && $json.body.length > 0 }}",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "cf-review-send-stopped",
+      "name": "Send Stopped by Database",
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        2420,
+        -220
+      ],
+      "parameters": {
+        "errorType": "errorMessage",
+        "errorMessage": "Begin Send returned no sendable attempt. Check suppression, reply, and inbox monitor state."
+      }
+    },
+    {
+      "id": "cf-review-gmail",
+      "name": "Send Immutable Gmail Payload",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "notesInFlow": true,
+      "notes": "Initial and follow-up approvals both send the immutable attempt payload as a new email. Follow-ups use a new honest subject prepared and approved earlier; do not add Re: or reply headers. Each Gmail result receives its own message and thread IDs.",
+      "position": [
+        2420,
+        -500
+      ],
+      "parameters": {
+        "resource": "message",
+        "operation": "send",
+        "sendTo": "={{ $json.recipient_email }}",
+        "subject": "={{ $json.subject }}",
+        "emailType": "text",
+        "message": "={{ $json.body }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "credentials": {
+        "gmailOAuth2": {
+          "name": "CLIENT_FINDER_GMAIL"
+        }
+      },
+      "onError": "continueErrorOutput",
+      "retryOnFail": false
+    },
+    {
+      "id": "cf-review-gmail-id-valid",
+      "name": "Gmail IDs Returned?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2640,
+        -540
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "check",
+              "leftValue": "={{ typeof $json.id === 'string' && $json.id.length > 0 && typeof $json.threadId === 'string' && $json.threadId.length > 0 }}",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "cf-review-complete",
+      "name": "Record Confirmed Gmail Send",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2860,
+        -620
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Owner Configuration').first().json.supabase_base_url + '/rest/v1/rpc/client_finder_complete_send' }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpCustomAuth",
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ { attempt_id: $('Recheck and Begin Send').first().json.id, gmail_message_id: $json.id, gmail_thread_id: $json.threadId } }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          },
+          "timeout": 20000
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/vnd.pgrst.object+json"
+            }
+          ]
+        }
+      },
+      "credentials": {
+        "httpCustomAuth": {
+          "name": "CLIENT_FINDER_SUPABASE_REST_AUTH"
+        }
+      },
+      "onError": "continueErrorOutput",
+      "alwaysOutputData": true
+    },
+    {
+      "id": "cf-review-confirmed-record-valid",
+      "name": "Confirmed Send Record Matches Gmail?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3080,
+        -620
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "cf-review-confirmed-record-check",
+              "leftValue": "={{ $json.status === 'sent' && $json.id === $('Claim Approved Send').first().json.id && $json.gmail_message_id === $('Gmail IDs Returned?').first().json.id && $json.gmail_thread_id === $('Gmail IDs Returned?').first().json.threadId && typeof $json.sent_at === 'string' && $json.sent_at.length > 0 }}",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "cf-review-unknown",
+      "name": "Mark Gmail Result Needs Checking",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2860,
+        -380
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Owner Configuration').first().json.supabase_base_url + '/rest/v1/rpc/client_finder_mark_send_unknown' }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpCustomAuth",
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ { attempt_id: $('Claim Approved Send').first().json.id } }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          },
+          "timeout": 20000
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/vnd.pgrst.object+json"
+            }
+          ]
+        }
+      },
+      "credentials": {
+        "httpCustomAuth": {
+          "name": "CLIENT_FINDER_SUPABASE_REST_AUTH"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "cf-review-unknown-note",
+      "name": "Tell Owner to Check Sent Mail",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        3080,
+        -380
+      ],
+      "parameters": {
+        "resource": "message",
+        "operation": "sendMessage",
+        "chatId": "={{ $('Owner Configuration').first().json.chat_id }}",
+        "text": "Needs checking: the send result or saved attempt is uncertain. Check Gmail Sent and the saved attempt before resolving it. Do not retry this draft.",
+        "additionalFields": {
+          "appendAttribution": false,
+          "disable_web_page_preview": true,
+          "parse_mode": "HTML"
+        }
+      },
+      "credentials": {
+        "telegramApi": {
+          "name": "CLIENT_FINDER_TELEGRAM_BOT"
+        }
+      }
+    },
+    {
+      "id": "cf-review-complete-error-note",
+      "name": "Tell Owner Gmail IDs Need Recording",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        3080,
+        -500
+      ],
+      "parameters": {
+        "resource": "message",
+        "operation": "sendMessage",
+        "chatId": "={{ $('Owner Configuration').first().json.chat_id }}",
+        "text": "={{ 'Gmail returned IDs, but saving the send result failed. Check Sent mail and the database before resolving this attempt. Attempt ID: ' + $('Claim Approved Send').first().json.id + '; Gmail message ID: ' + $('Gmail IDs Returned?').first().json.id + '; Gmail thread ID: ' + $('Gmail IDs Returned?').first().json.threadId + '. Do not retry.' }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "disable_web_page_preview": true,
+          "parse_mode": "HTML"
+        }
+      },
+      "credentials": {
+        "telegramApi": {
+          "name": "CLIENT_FINDER_TELEGRAM_BOT"
+        }
+      }
+    },
+    {
+      "id": "cf-review-claim-error-note",
+      "name": "Tell Owner Approval Claim Uncertain",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1980,
+        -180
+      ],
+      "parameters": {
+        "resource": "message",
+        "operation": "sendMessage",
+        "chatId": "={{ $('Owner Configuration').first().json.chat_id }}",
+        "text": "Approval could not be confirmed. Check the stored message and send attempts before trying again. No email should be manually retried from this card.",
+        "additionalFields": {
+          "appendAttribution": false,
+          "disable_web_page_preview": true,
+          "parse_mode": "HTML"
+        }
+      },
+      "credentials": {
+        "telegramApi": {
+          "name": "CLIENT_FINDER_TELEGRAM_BOT"
+        }
+      }
+    },
+    {
+      "id": "cf-review-sent-note",
+      "name": "Tell Owner Gmail Accepted",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        3080,
+        -620
+      ],
+      "parameters": {
+        "resource": "message",
+        "operation": "sendMessage",
+        "chatId": "={{ $('Owner Configuration').first().json.chat_id }}",
+        "text": "={{ 'Gmail accepted the approved email. Message ID: ' + $json.gmail_message_id + '. Delivery and replies are still unconfirmed.' }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "disable_web_page_preview": true,
+          "parse_mode": "HTML"
+        }
+      },
+      "credentials": {
+        "telegramApi": {
+          "name": "CLIENT_FINDER_TELEGRAM_BOT"
+        }
+      }
+    },
+    {
+      "id": "cf-review-request-edit",
+      "name": "Lock Card for Edit",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1760,
+        -180
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Owner Configuration').first().json.supabase_base_url + '/rest/v1/rpc/client_finder_request_edit' }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpCustomAuth",
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ { message_id: $('Parsed Callback').item.json.message_id, revision: Number($('Parsed Callback').item.json.revision), owner_user_id: Number($('Parsed Callback').item.json.owner_user_id), chat_id: Number($('Parsed Callback').item.json.chat_id), card_id: Number($('Parsed Callback').item.json.card_id) } }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          },
+          "timeout": 20000
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/vnd.pgrst.object+json"
+            }
+          ]
+        }
+      },
+      "credentials": {
+        "httpCustomAuth": {
+          "name": "CLIENT_FINDER_SUPABASE_REST_AUTH"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "cf-review-edit-prompt",
+      "name": "Ask for Full Replacement Email",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1980,
+        -180
+      ],
+      "parameters": {
+        "resource": "message",
+        "operation": "sendMessage",
+        "chatId": "={{ $('Owner Configuration').first().json.chat_id }}",
+        "text": "Edit requested. Reply to the ORIGINAL review card with the complete replacement in this format:\n\nRecipient: published@example.com\nSubject: Your full subject\nBody:\nYour complete email, including sender details and opt-out instructions.\n\nA new card will show the exact revised message for approval.",
+        "additionalFields": {
+          "appendAttribution": false,
+          "disable_web_page_preview": true,
+          "parse_mode": "HTML"
+        }
+      },
+      "credentials": {
+        "telegramApi": {
+          "name": "CLIENT_FINDER_TELEGRAM_BOT"
+        }
+      }
+    },
+    {
+      "id": "cf-review-skip",
+      "name": "Skip Review Card",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1760,
+        60
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Owner Configuration').first().json.supabase_base_url + '/rest/v1/rpc/client_finder_skip_message' }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpCustomAuth",
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ { message_id: $('Parsed Callback').item.json.message_id, revision: Number($('Parsed Callback').item.json.revision), owner_user_id: Number($('Parsed Callback').item.json.owner_user_id), chat_id: Number($('Parsed Callback').item.json.chat_id), card_id: Number($('Parsed Callback').item.json.card_id) } }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          },
+          "timeout": 20000
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/vnd.pgrst.object+json"
+            }
+          ]
+        }
+      },
+      "credentials": {
+        "httpCustomAuth": {
+          "name": "CLIENT_FINDER_SUPABASE_REST_AUTH"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "cf-review-skip-note",
+      "name": "Confirm Skipped Card",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1980,
+        60
+      ],
+      "parameters": {
+        "resource": "message",
+        "operation": "sendMessage",
+        "chatId": "={{ $('Owner Configuration').first().json.chat_id }}",
+        "text": "Skipped. This card cannot be approved.",
+        "additionalFields": {
+          "appendAttribution": false,
+          "disable_web_page_preview": true,
+          "parse_mode": "HTML"
+        }
+      },
+      "credentials": {
+        "telegramApi": {
+          "name": "CLIENT_FINDER_TELEGRAM_BOT"
+        }
+      }
+    },
+    {
+      "id": "cf-review-dnc",
+      "name": "Suppress Contact and Company",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1760,
+        300
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Owner Configuration').first().json.supabase_base_url + '/rest/v1/rpc/client_finder_suppress_contact' }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpCustomAuth",
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ { message_id: $('Parsed Callback').item.json.message_id, revision: Number($('Parsed Callback').item.json.revision), owner_user_id: Number($('Parsed Callback').item.json.owner_user_id), chat_id: Number($('Parsed Callback').item.json.chat_id), card_id: Number($('Parsed Callback').item.json.card_id) } }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          },
+          "timeout": 20000
+        }
+      },
+      "credentials": {
+        "httpCustomAuth": {
+          "name": "CLIENT_FINDER_SUPABASE_REST_AUTH"
+        }
+      },
+      "alwaysOutputData": true,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "cf-review-dnc-note",
+      "name": "Confirm Do Not Contact",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1980,
+        300
+      ],
+      "parameters": {
+        "resource": "message",
+        "operation": "sendMessage",
+        "chatId": "={{ $('Owner Configuration').first().json.chat_id }}",
+        "text": "Do not contact saved. Pending outreach for this contact and company is blocked.",
+        "additionalFields": {
+          "appendAttribution": false,
+          "disable_web_page_preview": true,
+          "parse_mode": "HTML"
+        }
+      },
+      "credentials": {
+        "telegramApi": {
+          "name": "CLIENT_FINDER_TELEGRAM_BOT"
+        }
+      }
+    },
+    {
+      "id": "cf-review-owner-reply",
+      "name": "Owner Reply to Review Card?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        880,
+        360
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "check",
+              "leftValue": "={{ String($json.message?.from?.id) === $json.owner_user_id && String($json.message?.chat?.id) === $json.chat_id && $json.message?.chat?.type === 'private' && Number($json.message?.reply_to_message?.message_id) > 0 }}",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "cf-review-edit-format",
+      "name": "Complete Edit Format?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1100,
+        360
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "check",
+              "leftValue": "={{ typeof $json.message?.text === 'string' && /^Recipient:[^\\n]+\\nSubject:[^\\n]+\\nBody:\\n[\\s\\S]+$/.test($json.message.text) && $json.message.text.length <= 8000 }}",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "cf-review-edit-format-note",
+      "name": "Explain Edit Format",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1320,
+        540
+      ],
+      "parameters": {
+        "resource": "message",
+        "operation": "sendMessage",
+        "chatId": "={{ $('Owner Configuration').first().json.chat_id }}",
+        "text": "Edit format needed. Reply to the original review card with Recipient:, Subject:, then Body: on its own line followed by the full email.",
+        "additionalFields": {
+          "appendAttribution": false,
+          "disable_web_page_preview": true,
+          "parse_mode": "HTML"
+        }
+      },
+      "credentials": {
+        "telegramApi": {
+          "name": "CLIENT_FINDER_TELEGRAM_BOT"
+        }
+      }
+    },
+    {
+      "id": "cf-review-parse-edit",
+      "name": "Parsed Edit Reply",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1320,
+        300
+      ],
+      "parameters": {
+        "mode": "manual",
+        "includeOtherFields": false,
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cf-review-parse-edit-0",
+              "name": "card_id",
+              "type": "string",
+              "value": "={{ String($json.message.reply_to_message.message_id) }}"
+            },
+            {
+              "id": "cf-review-parse-edit-1",
+              "name": "chat_id",
+              "type": "string",
+              "value": "={{ String($json.message.chat.id) }}"
+            },
+            {
+              "id": "cf-review-parse-edit-2",
+              "name": "owner_user_id",
+              "type": "string",
+              "value": "={{ String($json.message.from.id) }}"
+            },
+            {
+              "id": "cf-review-parse-edit-3",
+              "name": "recipient_email",
+              "type": "string",
+              "value": "={{ $json.message.text.match(/^Recipient:([^\\n]+)\\nSubject:/)[1].trim() }}"
+            },
+            {
+              "id": "cf-review-parse-edit-4",
+              "name": "subject",
+              "type": "string",
+              "value": "={{ $json.message.text.match(/\\nSubject:([^\\n]+)\\nBody:/)[1].trim() }}"
+            },
+            {
+              "id": "cf-review-parse-edit-5",
+              "name": "body",
+              "type": "string",
+              "value": "={{ $json.message.text.match(/\\nBody:\\n([\\s\\S]+)$/)[1] }}"
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "cf-review-find-edit",
+      "name": "Find Pending Edit by Card",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1540,
+        300
+      ],
+      "parameters": {
+        "method": "GET",
+        "url": "={{ $('Owner Configuration').first().json.supabase_base_url + '/rest/v1/client_finder_messages' }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpCustomAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "select",
+              "value": "id,revision,status,telegram_card_id,telegram_chat_id,telegram_owner_user_id"
+            },
+            {
+              "name": "telegram_card_id",
+              "value": "={{ 'eq.' + $('Parsed Edit Reply').item.json.card_id }}"
+            },
+            {
+              "name": "telegram_chat_id",
+              "value": "={{ 'eq.' + $('Parsed Edit Reply').item.json.chat_id }}"
+            },
+            {
+              "name": "telegram_owner_user_id",
+              "value": "={{ 'eq.' + $('Parsed Edit Reply').item.json.owner_user_id }}"
+            },
+            {
+              "name": "status",
+              "value": "eq.edit_requested"
+            },
+            {
+              "name": "limit",
+              "value": "1"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "responseFormat": "json"
+            }
+          },
+          "timeout": 20000
+        }
+      },
+      "credentials": {
+        "httpCustomAuth": {
+          "name": "CLIENT_FINDER_SUPABASE_REST_AUTH"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "cf-review-edit-found",
+      "name": "One Pending Edit Found?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1760,
+        300
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "check",
+              "leftValue": "={{ Array.isArray($json.body) && $json.body.length === 1 && $json.body[0].status === 'edit_requested' }}",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "cf-review-edit-not-found",
+      "name": "Edit Card Missing or Stale",
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        1980,
+        500
+      ],
+      "parameters": {
+        "errorType": "errorMessage",
+        "errorMessage": "No matching edit-requested card exists for this reply. Use the current card's Edit button."
+      }
+    },
+    {
+      "id": "cf-review-save-edit",
+      "name": "Create New Message Revision",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1980,
+        260
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Owner Configuration').first().json.supabase_base_url + '/rest/v1/rpc/client_finder_edit_message' }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpCustomAuth",
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ { message_id: $json.body[0].id, revision: Number($json.body[0].revision), owner_user_id: Number($('Parsed Edit Reply').item.json.owner_user_id), chat_id: Number($('Parsed Edit Reply').item.json.chat_id), card_id: Number($('Parsed Edit Reply').item.json.card_id), recipient_email: $('Parsed Edit Reply').item.json.recipient_email, subject: $('Parsed Edit Reply').item.json.subject, body: $('Parsed Edit Reply').item.json.body } }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          },
+          "timeout": 20000
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/vnd.pgrst.object+json"
+            }
+          ]
+        }
+      },
+      "credentials": {
+        "httpCustomAuth": {
+          "name": "CLIENT_FINDER_SUPABASE_REST_AUTH"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "cf-review-render-edit",
+      "name": "Render Revised Exact Card",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2200,
+        260
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "http://client-finder:8088/card",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ { message_id: $json.id } }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          },
+          "timeout": 20000
+        }
+      },
+      "credentials": {
+        "httpBearerAuth": {
+          "name": "CLIENT_FINDER_SERVICE_AUTH"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "cf-review-revised-valid",
+      "name": "Revised Card Complete?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2420,
+        260
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "check",
+              "leftValue": "={{ typeof $json.message_id === 'string' && /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test($json.message_id) && /^[1-9][0-9]*$/.test(String($json.revision)) && String($json.revision).length <= 10 && ['initial','followup'].includes($json.kind) && typeof $json.card_text === 'string' && $json.card_text.trim().length > 0 && $json.card_text.length <= 4096 }}",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "cf-review-revised-error",
+      "name": "Revised Card Incomplete",
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        2640,
+        460
+      ],
+      "parameters": {
+        "errorType": "errorMessage",
+        "errorMessage": "Revised message exists but its full review card could not be rendered. Do not approve the old card."
+      }
+    },
+    {
+      "id": "cf-review-new-card",
+      "name": "Post Revised Exact Card",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2640,
+        220
+      ],
+      "parameters": {
+        "resource": "message",
+        "operation": "sendMessage",
+        "chatId": "={{ $('Owner Configuration').first().json.chat_id }}",
+        "text": "={{ $json.card_text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') }}",
+        "replyMarkup": "inlineKeyboard",
+        "inlineKeyboard": {
+          "rows": [
+            {
+              "row": {
+                "buttons": [
+                  {
+                    "text": "Approve & send",
+                    "additionalFields": {
+                      "callback_data": "={{ 'cf:approve:' + $json.message_id + ':' + $json.revision }}"
+                    }
+                  },
+                  {
+                    "text": "Edit",
+                    "additionalFields": {
+                      "callback_data": "={{ 'cf:edit:' + $json.message_id + ':' + $json.revision }}"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "row": {
+                "buttons": [
+                  {
+                    "text": "Skip",
+                    "additionalFields": {
+                      "callback_data": "={{ 'cf:skip:' + $json.message_id + ':' + $json.revision }}"
+                    }
+                  },
+                  {
+                    "text": "Do not contact",
+                    "additionalFields": {
+                      "callback_data": "={{ 'cf:dnc:' + $json.message_id + ':' + $json.revision }}"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "additionalFields": {
+          "appendAttribution": false,
+          "disable_web_page_preview": true,
+          "parse_mode": "HTML"
+        }
+      },
+      "credentials": {
+        "telegramApi": {
+          "name": "CLIENT_FINDER_TELEGRAM_BOT"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "cf-review-new-id",
+      "name": "Revised Telegram ID Returned?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2860,
+        220
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "check",
+              "leftValue": "={{ Number.isInteger(Number($json.result?.message_id ?? $json.message_id)) && Number($json.result?.message_id ?? $json.message_id) > 0 && String($json.result?.chat?.id ?? $json.chat?.id) === $('Owner Configuration').first().json.chat_id }}",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "cf-review-new-error",
+      "name": "Revised Telegram Result Needs Checking",
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        3080,
+        420
+      ],
+      "parameters": {
+        "errorType": "errorMessage",
+        "errorMessage": "Telegram did not confirm the revised card ID. Check the bot chat before retrying."
+      }
+    },
+    {
+      "id": "cf-review-bind-new",
+      "name": "Bind Revised Card",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3080,
+        180
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Owner Configuration').first().json.supabase_base_url + '/rest/v1/rpc/client_finder_bind_card' }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpCustomAuth",
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ { message_id: $('Render Revised Exact Card').item.json.message_id, revision: Number($('Render Revised Exact Card').item.json.revision), owner_user_id: Number($('Owner Configuration').first().json.owner_user_id), chat_id: Number($json.result?.chat?.id ?? $json.chat?.id), card_id: Number($json.result?.message_id ?? $json.message_id) } }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          },
+          "timeout": 20000
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/vnd.pgrst.object+json"
+            }
+          ]
+        }
+      },
+      "credentials": {
+        "httpCustomAuth": {
+          "name": "CLIENT_FINDER_SUPABASE_REST_AUTH"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "cf-review-action-error-note",
+      "name": "Tell Owner Review Action Failed",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        3300,
+        540
+      ],
+      "parameters": {
+        "resource": "message",
+        "operation": "sendMessage",
+        "chatId": "={{ $('Owner Configuration').first().json.chat_id }}",
+        "text": "A Client Finder review or edit action could not be saved. The old card may be stale. Check the stored message status before trying again; no prospect email was sent by this action.",
+        "additionalFields": {
+          "appendAttribution": false,
+          "disable_web_page_preview": true,
+          "parse_mode": "HTML"
+        }
+      },
+      "credentials": {
+        "telegramApi": {
+          "name": "CLIENT_FINDER_TELEGRAM_BOT"
+        }
+      }
+    },
+    {
+      "id": "cf-review-bind-error-note",
+      "name": "Tell Owner Revised Card Binding Failed",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        3300,
+        180
+      ],
+      "parameters": {
+        "resource": "message",
+        "operation": "sendMessage",
+        "chatId": "={{ $('Owner Configuration').first().json.chat_id }}",
+        "text": "A revised review card was posted, but its card ID could not be saved. Its buttons cannot approve a send. Check the stored draft before taking action.",
+        "additionalFields": {
+          "appendAttribution": false,
+          "disable_web_page_preview": true,
+          "parse_mode": "HTML"
+        }
+      },
+      "credentials": {
+        "telegramApi": {
+          "name": "CLIENT_FINDER_TELEGRAM_BOT"
+        }
+      }
+    },
+    {
+      "id": "cf-review-new-card-delivery-error",
+      "name": "Revised Telegram Delivery Failed",
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        2860,
+        540
+      ],
+      "parameters": {
+        "errorType": "errorMessage",
+        "errorMessage": "Could not post the revised review card. The edited draft remains unbound; check the dedicated bot and n8n error workflow."
+      }
+    },
+    {
+      "id": "cf-review-callback-alert",
+      "name": "Tell Owner Callback Rejected",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1100,
+        200
+      ],
+      "parameters": {
+        "resource": "message",
+        "operation": "sendMessage",
+        "chatId": "={{ $('Owner Configuration').first().json.chat_id }}",
+        "text": "Client Finder rejected a review-button tap because the owner, chat, or card data did not match. No email was sent by that tap.",
+        "additionalFields": {
+          "appendAttribution": false,
+          "disable_web_page_preview": true,
+          "parse_mode": "HTML"
+        }
+      },
+      "credentials": {
+        "telegramApi": {
+          "name": "CLIENT_FINDER_TELEGRAM_BOT"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "cf-review-send-stopped-alert",
+      "name": "Tell Owner Approved Send Stopped",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2420,
+        -100
+      ],
+      "parameters": {
+        "resource": "message",
+        "operation": "sendMessage",
+        "chatId": "={{ $('Owner Configuration').first().json.chat_id }}",
+        "text": "Client Finder stopped the approved send before Gmail. Check the stored attempt, suppression, replies, and inbox monitor state. Do not retry this card until its status is clear.",
+        "additionalFields": {
+          "appendAttribution": false,
+          "disable_web_page_preview": true,
+          "parse_mode": "HTML"
+        }
+      },
+      "credentials": {
+        "telegramApi": {
+          "name": "CLIENT_FINDER_TELEGRAM_BOT"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "cf-review-edit-stale-alert",
+      "name": "Tell Owner Edit Card Stale",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1980,
+        620
+      ],
+      "parameters": {
+        "resource": "message",
+        "operation": "sendMessage",
+        "chatId": "={{ $('Owner Configuration').first().json.chat_id }}",
+        "text": "Client Finder could not match that edit reply to a pending review card. Use the current card's Edit button before replying again.",
+        "additionalFields": {
+          "appendAttribution": false,
+          "disable_web_page_preview": true,
+          "parse_mode": "HTML"
+        }
+      },
+      "credentials": {
+        "telegramApi": {
+          "name": "CLIENT_FINDER_TELEGRAM_BOT"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "cf-review-revised-incomplete-alert",
+      "name": "Tell Owner Revised Card Incomplete",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2640,
+        600
+      ],
+      "parameters": {
+        "resource": "message",
+        "operation": "sendMessage",
+        "chatId": "={{ $('Owner Configuration').first().json.chat_id }}",
+        "text": "The edited Client Finder draft could not be shown as a complete review card. The old card is stale; check the stored draft before trying another edit.",
+        "additionalFields": {
+          "appendAttribution": false,
+          "disable_web_page_preview": true,
+          "parse_mode": "HTML"
+        }
+      },
+      "credentials": {
+        "telegramApi": {
+          "name": "CLIENT_FINDER_TELEGRAM_BOT"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "cf-review-revised-id-alert",
+      "name": "Tell Owner Revised Telegram ID Uncertain",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        3080,
+        540
+      ],
+      "parameters": {
+        "resource": "message",
+        "operation": "sendMessage",
+        "chatId": "={{ $('Owner Configuration').first().json.chat_id }}",
+        "text": "A revised Client Finder card may have appeared, but its Telegram ID was not confirmed. Its buttons cannot send; inspect the bot chat and stored message before retrying.",
+        "additionalFields": {
+          "appendAttribution": false,
+          "disable_web_page_preview": true,
+          "parse_mode": "HTML"
+        }
+      },
+      "credentials": {
+        "telegramApi": {
+          "name": "CLIENT_FINDER_TELEGRAM_BOT"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "cf-review-revised-delivery-alert",
+      "name": "Tell Owner Revised Card Delivery Failed",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2860,
+        660
+      ],
+      "notesInFlow": true,
+      "notes": "This alert may fail with the original Telegram send. Configure an independent n8n error workflow or external alert channel before activation.",
+      "parameters": {
+        "resource": "message",
+        "operation": "sendMessage",
+        "chatId": "={{ $('Owner Configuration').first().json.chat_id }}",
+        "text": "Client Finder could not confirm delivery of the revised review card. The old card is stale; check the dedicated bot conversation and stored draft.",
+        "additionalFields": {
+          "appendAttribution": false,
+          "disable_web_page_preview": true,
+          "parse_mode": "HTML"
+        }
+      },
+      "credentials": {
+        "telegramApi": {
+          "name": "CLIENT_FINDER_TELEGRAM_BOT"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "cf-review-sender-settings",
+      "name": "Fetch Configured Sender",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1760,
+        -900
+      ],
+      "parameters": {
+        "method": "GET",
+        "url": "={{ $('Owner Configuration').first().json.supabase_base_url + '/rest/v1/client_finder_settings?id=eq.1&select=sender_email' }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpCustomAuth",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          },
+          "timeout": 20000
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/vnd.pgrst.object+json"
+            }
+          ]
+        }
+      },
+      "credentials": {
+        "httpCustomAuth": {
+          "name": "CLIENT_FINDER_SUPABASE_REST_AUTH"
+        }
+      },
+      "alwaysOutputData": true,
+      "retryOnFail": false,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "cf-review-sender-settings-valid",
+      "name": "Configured Sender Ready?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1980,
+        -900
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "check",
+              "leftValue": "={{ typeof $json.sender_email === 'string' && /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test($json.sender_email.trim()) }}",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "cf-review-gmail-profile",
+      "name": "Get Gmail Sender Profile",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2200,
+        -900
+      ],
+      "parameters": {
+        "method": "GET",
+        "url": "https://gmail.googleapis.com/gmail/v1/users/me/profile",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "gmailOAuth2",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          },
+          "timeout": 20000
+        }
+      },
+      "credentials": {
+        "gmailOAuth2": {
+          "name": "CLIENT_FINDER_GMAIL"
+        }
+      },
+      "alwaysOutputData": true,
+      "retryOnFail": false,
+      "onError": "continueErrorOutput",
+      "notesInFlow": true,
+      "notes": "Bind the same personal Gmail OAuth credential as the send node. Only armageddonvivas@gmail.com is allowed, regardless of the configured sender."
+    },
+    {
+      "id": "cf-review-sender-matches",
+      "name": "Gmail Sender Matches Configuration?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2420,
+        -900
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "check",
+              "leftValue": "={{ typeof $json.emailAddress === 'string' && $json.emailAddress.trim().length > 0 && typeof $('Fetch Configured Sender').first().json.sender_email === 'string' && $json.emailAddress.trim().toLowerCase() === $('Fetch Configured Sender').first().json.sender_email.trim().toLowerCase() && $json.emailAddress.trim().toLowerCase() === 'armageddonvivas@gmail.com' }}",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "cf-review-sender-identity-alert",
+      "name": "Tell Owner Sender Identity Failed",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2640,
+        -780
+      ],
+      "parameters": {
+        "resource": "message",
+        "operation": "sendMessage",
+        "chatId": "={{ $('Owner Configuration').first().json.chat_id }}",
+        "text": "Client Finder stopped the approved send before reserving an attempt. The configured sender could not be verified against the connected Gmail account. Check the sender setting and Gmail OAuth credential. No email was sent by this tap.",
+        "additionalFields": {
+          "appendAttribution": false,
+          "disable_web_page_preview": true,
+          "parse_mode": "HTML"
+        }
+      },
+      "credentials": {
+        "telegramApi": {
+          "name": "CLIENT_FINDER_TELEGRAM_BOT"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "cf-review-sender-identity-stop",
+      "name": "Sender Identity Unverified",
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        2860,
+        -780
+      ],
+      "parameters": {
+        "errorType": "errorMessage",
+        "errorMessage": "Client Finder sender identity could not be verified; no send attempt was claimed."
+      }
+    },
+    {
+      "id": "cf-conversation-router",
+      "name": "Conversation Reply Callback?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1000,
+        -500
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "reply-prefix",
+              "leftValue": "={{ /^(?:r[aesd]|a[aes]):[a-f0-9]{32}:[1-9][0-9]*$/.test($json.callback_query?.data || '') }}",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "process-personal-reply-review",
+      "name": "Process Personal Reply Review",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1240,
+        -500
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "http://client-finder:8088/replies/telegram",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ { callback_query: $json.callback_query } }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          },
+          "timeout": 180000
+        }
+      },
+      "credentials": {
+        "httpBearerAuth": {
+          "name": "CLIENT_FINDER_SERVICE_AUTH"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Client Finder Telegram Updates": {
+      "main": [
+        [
+          {
+            "node": "Owner Configuration",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Owner Configuration": {
+      "main": [
+        [
+          {
+            "node": "Owner Configuration Ready?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Owner Configuration Ready?": {
+      "main": [
+        [
+          {
+            "node": "Conversation Reply Callback?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Configuration Missing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Callback or Message?": {
+      "main": [
+        [
+          {
+            "node": "Owner and Callback Valid?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Owner Reply to Review Card?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Owner and Callback Valid?": {
+      "main": [
+        [
+          {
+            "node": "Parsed Callback",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Tell Owner Callback Rejected",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parsed Callback": {
+      "main": [
+        [
+          {
+            "node": "Acknowledge Review Tap",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Review Action",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Acknowledge Review Tap": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Tell Owner Callback Acknowledgment Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Review Action": {
+      "main": [
+        [
+          {
+            "node": "Fetch Configured Sender",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Lock Card for Edit",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Skip Review Card",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Suppress Contact and Company",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Claim Approved Send": {
+      "main": [
+        [
+          {
+            "node": "Recheck and Begin Send",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Tell Owner Approval Claim Uncertain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Recheck and Begin Send": {
+      "main": [
+        [
+          {
+            "node": "Approved Attempt Still Sendable?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Mark Gmail Result Needs Checking",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Approved Attempt Still Sendable?": {
+      "main": [
+        [
+          {
+            "node": "Send Immutable Gmail Payload",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Tell Owner Approved Send Stopped",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Immutable Gmail Payload": {
+      "main": [
+        [
+          {
+            "node": "Gmail IDs Returned?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Mark Gmail Result Needs Checking",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail IDs Returned?": {
+      "main": [
+        [
+          {
+            "node": "Record Confirmed Gmail Send",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Mark Gmail Result Needs Checking",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Record Confirmed Gmail Send": {
+      "main": [
+        [
+          {
+            "node": "Confirmed Send Record Matches Gmail?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Mark Gmail Result Needs Checking",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Tell Owner Gmail IDs Need Recording",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Confirmed Send Record Matches Gmail?": {
+      "main": [
+        [
+          {
+            "node": "Tell Owner Gmail Accepted",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Mark Gmail Result Needs Checking",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Tell Owner Gmail IDs Need Recording",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mark Gmail Result Needs Checking": {
+      "main": [
+        [
+          {
+            "node": "Tell Owner to Check Sent Mail",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Tell Owner to Check Sent Mail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lock Card for Edit": {
+      "main": [
+        [
+          {
+            "node": "Ask for Full Replacement Email",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Tell Owner Review Action Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Skip Review Card": {
+      "main": [
+        [
+          {
+            "node": "Confirm Skipped Card",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Tell Owner Review Action Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Suppress Contact and Company": {
+      "main": [
+        [
+          {
+            "node": "Confirm Do Not Contact",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Tell Owner Review Action Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Owner Reply to Review Card?": {
+      "main": [
+        [
+          {
+            "node": "Complete Edit Format?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "Complete Edit Format?": {
+      "main": [
+        [
+          {
+            "node": "Parsed Edit Reply",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Explain Edit Format",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parsed Edit Reply": {
+      "main": [
+        [
+          {
+            "node": "Find Pending Edit by Card",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Find Pending Edit by Card": {
+      "main": [
+        [
+          {
+            "node": "One Pending Edit Found?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Tell Owner Review Action Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "One Pending Edit Found?": {
+      "main": [
+        [
+          {
+            "node": "Create New Message Revision",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Tell Owner Edit Card Stale",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create New Message Revision": {
+      "main": [
+        [
+          {
+            "node": "Render Revised Exact Card",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Tell Owner Review Action Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Render Revised Exact Card": {
+      "main": [
+        [
+          {
+            "node": "Revised Card Complete?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Tell Owner Review Action Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Revised Card Complete?": {
+      "main": [
+        [
+          {
+            "node": "Post Revised Exact Card",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Tell Owner Revised Card Incomplete",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Post Revised Exact Card": {
+      "main": [
+        [
+          {
+            "node": "Revised Telegram ID Returned?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Tell Owner Revised Card Delivery Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Revised Telegram ID Returned?": {
+      "main": [
+        [
+          {
+            "node": "Bind Revised Card",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Tell Owner Revised Telegram ID Uncertain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Bind Revised Card": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Tell Owner Revised Card Binding Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tell Owner Callback Rejected": {
+      "main": [
+        [
+          {
+            "node": "Unauthorized or Stale Callback",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Unauthorized or Stale Callback",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tell Owner Approved Send Stopped": {
+      "main": [
+        [
+          {
+            "node": "Send Stopped by Database",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send Stopped by Database",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tell Owner Edit Card Stale": {
+      "main": [
+        [
+          {
+            "node": "Edit Card Missing or Stale",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Card Missing or Stale",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tell Owner Revised Card Incomplete": {
+      "main": [
+        [
+          {
+            "node": "Revised Card Incomplete",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Revised Card Incomplete",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tell Owner Revised Telegram ID Uncertain": {
+      "main": [
+        [
+          {
+            "node": "Revised Telegram Result Needs Checking",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Revised Telegram Result Needs Checking",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tell Owner Revised Card Delivery Failed": {
+      "main": [
+        [
+          {
+            "node": "Revised Telegram Delivery Failed",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Revised Telegram Delivery Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Configured Sender": {
+      "main": [
+        [
+          {
+            "node": "Configured Sender Ready?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Tell Owner Sender Identity Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Configured Sender Ready?": {
+      "main": [
+        [
+          {
+            "node": "Get Gmail Sender Profile",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Tell Owner Sender Identity Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Gmail Sender Profile": {
+      "main": [
+        [
+          {
+            "node": "Gmail Sender Matches Configuration?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Tell Owner Sender Identity Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail Sender Matches Configuration?": {
+      "main": [
+        [
+          {
+            "node": "Claim Approved Send",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Tell Owner Sender Identity Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tell Owner Sender Identity Failed": {
+      "main": [
+        [
+          {
+            "node": "Sender Identity Unverified",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Sender Identity Unverified",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Conversation Reply Callback?": {
+      "main": [
+        [
+          {
+            "node": "Process Personal Reply Review",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Callback or Message?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Asia/Manila",
+    "saveDataErrorExecution": "none",
+    "saveDataSuccessExecution": "none",
+    "saveManualExecutions": false,
+    "saveExecutionProgress": false
+  },
+  "pinData": {}
+}

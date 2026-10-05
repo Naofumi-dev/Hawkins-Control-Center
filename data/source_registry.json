@@ -1,0 +1,4281 @@
+{
+  "schema_version": 1,
+  "source_workbook": "Copy of PALDOGIE - Job Platforms.xlsx",
+  "source_sha256": "746d62530ecd9b70946b31ed4dc3c23bfa512b1c8a0d7e3aef5404ffbc1aab39",
+  "row_count": 393,
+  "source_count": 169,
+  "sources": [
+    {
+      "url": "https://jobspresso.co",
+      "name": "Jobspresso",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 2,
+          "name": "Jobspresso",
+          "original_url": "https://jobspresso.co",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://solidgigs.com",
+      "name": "SolidGigs",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 3,
+          "name": "SolidGigs",
+          "original_url": "https://solidgigs.com",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://contra.com",
+      "name": "Contra",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 4,
+          "name": "Contra",
+          "original_url": "https://contra.com",
+          "original_category": "platforms"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 347,
+          "name": "Contra",
+          "original_url": "https://contra.com/",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://dynamitejobs.com",
+      "name": "Dynamite Jobs",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 5,
+          "name": "Dynamite Jobs",
+          "original_url": "https://dynamitejobs.com",
+          "original_category": "platforms"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 350,
+          "name": "Dynamite Jobs",
+          "original_url": "https://dynamitejobs.com/",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://www.indiehackers.com",
+      "name": "Indie Hackers",
+      "category": "subreddit",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 6,
+          "name": "Indie Hackers",
+          "original_url": "https://www.indiehackers.com",
+          "original_category": "subreddit"
+        }
+      ]
+    },
+    {
+      "url": "https://podmatch.com",
+      "name": "PodMatch",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 7,
+          "name": "PodMatch",
+          "original_url": "https://podmatch.com",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://www.alignable.com",
+      "name": "Alignable",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 8,
+          "name": "Alignable",
+          "original_url": "https://www.alignable.com",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://www.theassist.com",
+      "name": "The Assist Agency",
+      "category": "agency",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 9,
+          "name": "The Assist Agency",
+          "original_url": "https://www.theassist.com",
+          "original_category": "agency"
+        }
+      ]
+    },
+    {
+      "url": "https://belaysolutions.com",
+      "name": "Belay Solutions",
+      "category": "agency",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 10,
+          "name": "Belay Solutions",
+          "original_url": "https://belaysolutions.com",
+          "original_category": "agency"
+        }
+      ]
+    },
+    {
+      "url": "https://boldly.com",
+      "name": "Boldly",
+      "category": "agency",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 11,
+          "name": "Boldly",
+          "original_url": "https://boldly.com",
+          "original_category": "agency"
+        }
+      ]
+    },
+    {
+      "url": "https://greatassistant.com",
+      "name": "Great Assistant",
+      "category": "agency",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 12,
+          "name": "Great Assistant",
+          "original_url": "https://greatassistant.com",
+          "original_category": "agency"
+        }
+      ]
+    },
+    {
+      "url": "https://thevirtualgurus.com",
+      "name": "Virtual Gurus",
+      "category": "agency",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 13,
+          "name": "Virtual Gurus",
+          "original_url": "https://thevirtualgurus.com",
+          "original_category": "agency"
+        }
+      ]
+    },
+    {
+      "url": "https://gritprova.com",
+      "name": "GritPro",
+      "category": "agency",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 14,
+          "name": "GritPro",
+          "original_url": "https://gritprova.com/",
+          "original_category": "agency"
+        }
+      ]
+    },
+    {
+      "url": "https://rocketstationcareers.com/care",
+      "name": "Rocket Station",
+      "category": "agency",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 15,
+          "name": "Rocket Station",
+          "original_url": "https://rocketstationcareers.com/care",
+          "original_category": "agency"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 36,
+          "name": "Rocket Station",
+          "original_url": "https://rocketstationcareers.com/care",
+          "original_category": "agency"
+        }
+      ]
+    },
+    {
+      "url": "https://www.facebook.com/sphererocketva/",
+      "name": "Sphere Rocket",
+      "category": "agency",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 16,
+          "name": "Sphere Rocket",
+          "original_url": "https://www.facebook.com/sphererocketva/",
+          "original_category": "agency"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 37,
+          "name": "Sphere Rocket",
+          "original_url": "https://www.facebook.com/sphererocketva/",
+          "original_category": "agency"
+        }
+      ]
+    },
+    {
+      "url": "https://zoomployee.breezy.hr/p/d7c44a",
+      "name": "Zoomployee",
+      "category": "agency",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 17,
+          "name": "Zoomployee",
+          "original_url": "https://zoomployee.breezy.hr/p/d7c44a",
+          "original_category": "agency"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 28,
+          "name": "Zoomployee",
+          "original_url": "https://zoomployee.breezy.hr/p/d7c44a",
+          "original_category": "agency"
+        }
+      ]
+    },
+    {
+      "url": "https://careers.myvirtudesk.ph/applicants",
+      "name": "Virtudesk",
+      "category": "agency",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 18,
+          "name": "Virtudesk",
+          "original_url": "https://careers.myvirtudesk.ph/applicants",
+          "original_category": "agency"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 29,
+          "name": "Virtudesk",
+          "original_url": "https://careers.myvirtudesk.ph/applicants",
+          "original_category": "agency"
+        }
+      ]
+    },
+    {
+      "url": "https://pineapplestaffing.com/apply/",
+      "name": "Pineapple Staffing",
+      "category": "agency",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 19,
+          "name": "Pineapple Staffing",
+          "original_url": "https://pineapplestaffing.com/apply/",
+          "original_category": "agency"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 30,
+          "name": "Pineapple Staffing",
+          "original_url": "https://pineapplestaffing.com/apply/",
+          "original_category": "agency"
+        }
+      ]
+    },
+    {
+      "url": "https://revaglobal.ph/join-us/",
+      "name": "RevaGlobal",
+      "category": "agency",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 20,
+          "name": "RevaGlobal",
+          "original_url": "https://revaglobal.ph/join-us/",
+          "original_category": "agency"
+        }
+      ]
+    },
+    {
+      "url": "https://app.vpmsolutions.com/register",
+      "name": "VPM Solutions",
+      "category": "agency",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 21,
+          "name": "VPM Solutions",
+          "original_url": "https://app.vpmsolutions.com/register",
+          "original_category": "agency"
+        }
+      ]
+    },
+    {
+      "url": "https://outsourceaccess.com/careers-oa/",
+      "name": "Outsource Access",
+      "category": "agency",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 22,
+          "name": "Outsource Access",
+          "original_url": "https://outsourceaccess.com/careers-oa/",
+          "original_category": "agency"
+        }
+      ]
+    },
+    {
+      "url": "https://www.phyllissong.com/connect",
+      "name": "Phyllis Song",
+      "category": "agency",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 23,
+          "name": "Phyllis Song",
+          "original_url": "https://www.phyllissong.com/connect",
+          "original_category": "agency"
+        }
+      ]
+    },
+    {
+      "url": "https://jobs.athenago.com",
+      "name": "Athena",
+      "category": "agency",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 24,
+          "name": "Athena",
+          "original_url": "https://jobs.athenago.com/",
+          "original_category": "agency"
+        }
+      ]
+    },
+    {
+      "url": "https://www.myoutdesk.ph",
+      "name": "MyOutDesk",
+      "category": "agency",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 25,
+          "name": "MyOutDesk",
+          "original_url": "https://www.myoutdesk.ph/",
+          "original_category": "agency"
+        }
+      ]
+    },
+    {
+      "url": "https://www.coconutva.com/apply",
+      "name": "Coconut VA",
+      "category": "agency",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 26,
+          "name": "Coconut VA",
+          "original_url": "https://www.coconutva.com/apply",
+          "original_category": "agency"
+        }
+      ]
+    },
+    {
+      "url": "https://www.outsourceplug.com/jobs/",
+      "name": "Outsource Plug",
+      "category": "agency",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 27,
+          "name": "Outsource Plug",
+          "original_url": "https://www.outsourceplug.com/jobs/",
+          "original_category": "agency"
+        }
+      ]
+    },
+    {
+      "url": "https://fasttrackfba.com/work-for-us/",
+      "name": "Fasttrack FBA",
+      "category": "agency",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 31,
+          "name": "Fasttrack FBA",
+          "original_url": "https://fasttrackfba.com/work-for-us/",
+          "original_category": "agency"
+        }
+      ]
+    },
+    {
+      "url": "https://virtualhub.ph",
+      "name": "Virtualhub",
+      "category": "agency",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 32,
+          "name": "Virtualhub",
+          "original_url": "https://virtualhub.ph/",
+          "original_category": "agency"
+        }
+      ]
+    },
+    {
+      "url": "https://workhub.atexto.com/v2/app/a/l",
+      "name": "Atexto",
+      "category": "agency",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 33,
+          "name": "Atexto",
+          "original_url": "https://workhub.atexto.com/v2/app/a/l",
+          "original_category": "agency"
+        }
+      ]
+    },
+    {
+      "url": "https://www.cloudstaff.com/careers/",
+      "name": "Cloudstaff",
+      "category": "agency",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 34,
+          "name": "Cloudstaff",
+          "original_url": "https://www.cloudstaff.com/careers/",
+          "original_category": "agency"
+        }
+      ]
+    },
+    {
+      "url": "https://homeserviceva.com",
+      "name": "HomeService VA",
+      "category": "agency",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 35,
+          "name": "HomeService VA",
+          "original_url": "https://homeserviceva.com/",
+          "original_category": "agency"
+        }
+      ]
+    },
+    {
+      "url": "https://www.facebook.com/groups/AmbitiousFemaleEntrepreneursSociety",
+      "name": "Ambitious Female Entrepreneurs Society",
+      "category": "fb group",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 38,
+          "name": "Ambitious Female Entrepreneurs Society",
+          "original_url": "https://www.facebook.com/groups/AmbitiousFemaleEntrepreneursSociety",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 43,
+          "name": "Ambitious Female Entrepreneurs Society",
+          "original_url": "https://www.facebook.com/groups/AmbitiousFemaleEntrepreneursSociety",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 49,
+          "name": "Ambitious Female Entrepreneurs Society",
+          "original_url": "https://www.facebook.com/groups/AmbitiousFemaleEntrepreneursSociety",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 90,
+          "name": "Ambitious Female Entrepreneurs Society",
+          "original_url": "https://www.facebook.com/groups/AmbitiousFemaleEntrepreneursSociety",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 135,
+          "name": "Ambitious Female Entrepreneurs Society",
+          "original_url": "https://www.facebook.com/groups/AmbitiousFemaleEntrepreneursSociety",
+          "original_category": "fb group"
+        }
+      ]
+    },
+    {
+      "url": "https://www.facebook.com/groups/WomenBusinessLounge",
+      "name": "Women Business Lounge",
+      "category": "fb group",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 39,
+          "name": "Women Business Lounge",
+          "original_url": "https://www.facebook.com/groups/WomenBusinessLounge",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 40,
+          "name": "Women Business Lounge",
+          "original_url": "https://www.facebook.com/groups/WomenBusinessLounge",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 82,
+          "name": "Women Business Lounge",
+          "original_url": "https://www.facebook.com/groups/WomenBusinessLounge",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 94,
+          "name": "Women Business Lounge",
+          "original_url": "https://www.facebook.com/groups/WomenBusinessLounge",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 99,
+          "name": "Women Business Lounge",
+          "original_url": "https://www.facebook.com/groups/WomenBusinessLounge",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 152,
+          "name": "Women Business Lounge",
+          "original_url": "https://www.facebook.com/groups/WomenBusinessLounge",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 183,
+          "name": "Women Business Lounge",
+          "original_url": "https://www.facebook.com/groups/WomenBusinessLounge",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 185,
+          "name": "Women Business Lounge",
+          "original_url": "https://www.facebook.com/groups/WomenBusinessLounge",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 191,
+          "name": "Women Business Lounge",
+          "original_url": "https://www.facebook.com/groups/WomenBusinessLounge",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 216,
+          "name": "Women Business Lounge",
+          "original_url": "https://www.facebook.com/groups/WomenBusinessLounge",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 226,
+          "name": "Women Business Lounge",
+          "original_url": "https://www.facebook.com/groups/WomenBusinessLounge",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 243,
+          "name": "Women Business Lounge",
+          "original_url": "https://www.facebook.com/groups/WomenBusinessLounge",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 249,
+          "name": "Women Business Lounge",
+          "original_url": "https://www.facebook.com/groups/WomenBusinessLounge",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 274,
+          "name": "Women Business Lounge",
+          "original_url": "https://www.facebook.com/groups/WomenBusinessLounge",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 275,
+          "name": "Women Business Lounge",
+          "original_url": "https://www.facebook.com/groups/WomenBusinessLounge",
+          "original_category": "fb group"
+        }
+      ]
+    },
+    {
+      "url": "https://www.facebook.com/groups/TheSocialBungalow",
+      "name": "The Social Bungalow",
+      "category": "fb group",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 41,
+          "name": "The Social Bungalow",
+          "original_url": "https://www.facebook.com/groups/TheSocialBungalow",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 70,
+          "name": "The Social Bungalow",
+          "original_url": "https://www.facebook.com/groups/TheSocialBungalow",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 104,
+          "name": "The Social Bungalow",
+          "original_url": "https://www.facebook.com/groups/TheSocialBungalow",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 196,
+          "name": "The Social Bungalow",
+          "original_url": "https://www.facebook.com/groups/TheSocialBungalow",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 254,
+          "name": "The Social Bungalow",
+          "original_url": "https://www.facebook.com/groups/TheSocialBungalow",
+          "original_category": "fb group"
+        }
+      ]
+    },
+    {
+      "url": "https://www.facebook.com/groups/marketlikeabossgroup/",
+      "name": "Market Like a Boss Group",
+      "category": "fb group",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 42,
+          "name": "Market Like a Boss Group",
+          "original_url": "https://www.facebook.com/groups/marketlikeabossgroup/",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 48,
+          "name": "Market Like a Boss Group",
+          "original_url": "https://www.facebook.com/groups/marketlikeabossgroup/",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 63,
+          "name": "Market Like a Boss Group",
+          "original_url": "https://www.facebook.com/groups/marketlikeabossgroup/",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 105,
+          "name": "Market Like a Boss Group",
+          "original_url": "https://www.facebook.com/groups/marketlikeabossgroup/",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 146,
+          "name": "Market Like a Boss Group",
+          "original_url": "https://www.facebook.com/groups/marketlikeabossgroup/",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 155,
+          "name": "Market Like a Boss Group",
+          "original_url": "https://www.facebook.com/groups/marketlikeabossgroup/",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 160,
+          "name": "Market Like a Boss Group",
+          "original_url": "https://www.facebook.com/groups/marketlikeabossgroup/",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 168,
+          "name": "Market Like a Boss Group",
+          "original_url": "https://www.facebook.com/groups/marketlikeabossgroup/",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 186,
+          "name": "Market Like a Boss Group",
+          "original_url": "https://www.facebook.com/groups/marketlikeabossgroup/",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 223,
+          "name": "Market Like a Boss Group",
+          "original_url": "https://www.facebook.com/groups/marketlikeabossgroup/",
+          "original_category": "fb group"
+        }
+      ]
+    },
+    {
+      "url": "https://www.facebook.com/groups/TeamBossBabesJoinGroup/",
+      "name": "Team Boss Babes",
+      "category": "fb group",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 44,
+          "name": "Team Boss Babes",
+          "original_url": "https://www.facebook.com/groups/TeamBossBabesJoinGroup/",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 79,
+          "name": "Team Boss Babes",
+          "original_url": "https://www.facebook.com/groups/TeamBossBabesJoinGroup/",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 227,
+          "name": "Team Boss Babes",
+          "original_url": "https://www.facebook.com/groups/TeamBossBabesJoinGroup/",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 239,
+          "name": "Team Boss Babes",
+          "original_url": "https://www.facebook.com/groups/TeamBossBabesJoinGroup/",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 264,
+          "name": "Team Boss Babes",
+          "original_url": "https://www.facebook.com/groups/TeamBossBabesJoinGroup/",
+          "original_category": "fb group"
+        }
+      ]
+    },
+    {
+      "url": "https://www.facebook.com/groups/wonderwomenthrive/",
+      "name": "Wonder Women Thrive",
+      "category": "fb group",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 45,
+          "name": "Wonder Women Thrive",
+          "original_url": "https://www.facebook.com/groups/wonderwomenthrive/",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 75,
+          "name": "Wonder Women Thrive",
+          "original_url": "https://www.facebook.com/groups/wonderwomenthrive/",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 81,
+          "name": "Wonder Women Thrive",
+          "original_url": "https://www.facebook.com/groups/wonderwomenthrive/",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 214,
+          "name": "Wonder Women Thrive",
+          "original_url": "https://www.facebook.com/groups/wonderwomenthrive/",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 221,
+          "name": "Wonder Women Thrive",
+          "original_url": "https://www.facebook.com/groups/wonderwomenthrive/",
+          "original_category": "fb group"
+        }
+      ]
+    },
+    {
+      "url": "https://www.facebook.com/groups/fierce.WIN",
+      "name": "Fierce WIN",
+      "category": "fb group",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 46,
+          "name": "Fierce WIN",
+          "original_url": "https://www.facebook.com/groups/fierce.WIN",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 71,
+          "name": "Fierce WIN",
+          "original_url": "https://www.facebook.com/groups/fierce.WIN",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 87,
+          "name": "Fierce WIN",
+          "original_url": "https://www.facebook.com/groups/fierce.WIN",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 131,
+          "name": "Fierce WIN",
+          "original_url": "https://www.facebook.com/groups/fierce.WIN",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 147,
+          "name": "Fierce WIN",
+          "original_url": "https://www.facebook.com/groups/fierce.WIN",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 232,
+          "name": "Fierce WIN",
+          "original_url": "https://www.facebook.com/groups/fierce.WIN",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 233,
+          "name": "Fierce WIN",
+          "original_url": "https://www.facebook.com/groups/fierce.WIN",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 248,
+          "name": "Fierce WIN",
+          "original_url": "https://www.facebook.com/groups/fierce.WIN",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 273,
+          "name": "Fierce WIN",
+          "original_url": "https://www.facebook.com/groups/fierce.WIN",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 280,
+          "name": "Fierce WIN",
+          "original_url": "https://www.facebook.com/groups/fierce.WIN",
+          "original_category": "fb group"
+        }
+      ]
+    },
+    {
+      "url": "https://www.facebook.com/groups/michellegarzacoaching/",
+      "name": "Michelle Garza Coaching",
+      "category": "fb group",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 47,
+          "name": "Michelle Garza Coaching",
+          "original_url": "https://www.facebook.com/groups/michellegarzacoaching/",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 65,
+          "name": "Michelle Garza Coaching",
+          "original_url": "https://www.facebook.com/groups/michellegarzacoaching/",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 73,
+          "name": "Michelle Garza Coaching",
+          "original_url": "https://www.facebook.com/groups/michellegarzacoaching/",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 93,
+          "name": "Michelle Garza Coaching",
+          "original_url": "https://www.facebook.com/groups/michellegarzacoaching/",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 163,
+          "name": "Michelle Garza Coaching",
+          "original_url": "https://www.facebook.com/groups/michellegarzacoaching/",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 170,
+          "name": "Michelle Garza Coaching",
+          "original_url": "https://www.facebook.com/groups/michellegarzacoaching/",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 172,
+          "name": "Michelle Garza Coaching",
+          "original_url": "https://www.facebook.com/groups/michellegarzacoaching/",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 198,
+          "name": "Michelle Garza Coaching",
+          "original_url": "https://www.facebook.com/groups/michellegarzacoaching/",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 208,
+          "name": "Michelle Garza Coaching",
+          "original_url": "https://www.facebook.com/groups/michellegarzacoaching/",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 234,
+          "name": "Michelle Garza Coaching",
+          "original_url": "https://www.facebook.com/groups/michellegarzacoaching/",
+          "original_category": "fb group"
+        }
+      ]
+    },
+    {
+      "url": "https://www.facebook.com/groups/fearlessandempoweredentrepenurs",
+      "name": "Fearless and Empowered Entrepreneurs",
+      "category": "fb group",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 50,
+          "name": "Fearless and Empowered Entrepreneurs",
+          "original_url": "https://www.facebook.com/groups/fearlessandempoweredentrepenurs",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 123,
+          "name": "Fearless and Empowered Entrepreneurs",
+          "original_url": "https://www.facebook.com/groups/fearlessandempoweredentrepenurs",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 188,
+          "name": "Fearless and Empowered Entrepreneurs",
+          "original_url": "https://www.facebook.com/groups/fearlessandempoweredentrepenurs",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 202,
+          "name": "Fearless and Empowered Entrepreneurs",
+          "original_url": "https://www.facebook.com/groups/fearlessandempoweredentrepenurs",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 244,
+          "name": "Fearless and Empowered Entrepreneurs",
+          "original_url": "https://www.facebook.com/groups/fearlessandempoweredentrepenurs",
+          "original_category": "fb group"
+        }
+      ]
+    },
+    {
+      "url": "https://www.facebook.com/groups/dreamtribes",
+      "name": "Dream Tribes",
+      "category": "fb group",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 51,
+          "name": "Dream Tribes",
+          "original_url": "https://www.facebook.com/groups/dreamtribes",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 77,
+          "name": "Dream Tribes",
+          "original_url": "https://www.facebook.com/groups/dreamtribes",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 193,
+          "name": "Dream Tribes",
+          "original_url": "https://www.facebook.com/groups/dreamtribes",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 259,
+          "name": "Dream Tribes",
+          "original_url": "https://www.facebook.com/groups/dreamtribes",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 271,
+          "name": "Dream Tribes",
+          "original_url": "https://www.facebook.com/groups/dreamtribes",
+          "original_category": "fb group"
+        }
+      ]
+    },
+    {
+      "url": "https://www.facebook.com/groups/socialmediamumz",
+      "name": "Social Media Mumz",
+      "category": "fb group",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 52,
+          "name": "Social Media Mumz",
+          "original_url": "https://www.facebook.com/groups/socialmediamumz",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 61,
+          "name": "Social Media Mumz",
+          "original_url": "https://www.facebook.com/groups/socialmediamumz",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 110,
+          "name": "Social Media Mumz",
+          "original_url": "https://www.facebook.com/groups/socialmediamumz",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 119,
+          "name": "Social Media Mumz",
+          "original_url": "https://www.facebook.com/groups/socialmediamumz",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 126,
+          "name": "Social Media Mumz",
+          "original_url": "https://www.facebook.com/groups/socialmediamumz",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 127,
+          "name": "Social Media Mumz",
+          "original_url": "https://www.facebook.com/groups/socialmediamumz",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 143,
+          "name": "Social Media Mumz",
+          "original_url": "https://www.facebook.com/groups/socialmediamumz",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 197,
+          "name": "Social Media Mumz",
+          "original_url": "https://www.facebook.com/groups/socialmediamumz",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 261,
+          "name": "Social Media Mumz",
+          "original_url": "https://www.facebook.com/groups/socialmediamumz",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 267,
+          "name": "Social Media Mumz",
+          "original_url": "https://www.facebook.com/groups/socialmediamumz",
+          "original_category": "fb group"
+        }
+      ]
+    },
+    {
+      "url": "https://www.facebook.com/groups/diysocialstrategy/discussion/preview",
+      "name": "DIY Social Strategy",
+      "category": "fb group",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 53,
+          "name": "DIY Social Strategy",
+          "original_url": "https://www.facebook.com/groups/diysocialstrategy/discussion/preview",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 89,
+          "name": "DIY Social Strategy",
+          "original_url": "https://www.facebook.com/groups/diysocialstrategy/discussion/preview",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 140,
+          "name": "DIY Social Strategy",
+          "original_url": "https://www.facebook.com/groups/diysocialstrategy/discussion/preview",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 150,
+          "name": "DIY Social Strategy",
+          "original_url": "https://www.facebook.com/groups/diysocialstrategy/discussion/preview",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 162,
+          "name": "DIY Social Strategy",
+          "original_url": "https://www.facebook.com/groups/diysocialstrategy/discussion/preview",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 169,
+          "name": "DIY Social Strategy",
+          "original_url": "https://www.facebook.com/groups/diysocialstrategy/discussion/preview",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 179,
+          "name": "DIY Social Strategy",
+          "original_url": "https://www.facebook.com/groups/diysocialstrategy/discussion/preview",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 242,
+          "name": "DIY Social Strategy",
+          "original_url": "https://www.facebook.com/groups/diysocialstrategy/discussion/preview",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 263,
+          "name": "DIY Social Strategy",
+          "original_url": "https://www.facebook.com/groups/diysocialstrategy/discussion/preview",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 279,
+          "name": "DIY Social Strategy",
+          "original_url": "https://www.facebook.com/groups/diysocialstrategy/discussion/preview",
+          "original_category": "fb group"
+        }
+      ]
+    },
+    {
+      "url": "https://www.facebook.com/groups/thethrivingfemaleentrepreneurs",
+      "name": "The Thriving Female Entrepreneurs",
+      "category": "fb group",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 54,
+          "name": "The Thriving Female Entrepreneurs",
+          "original_url": "https://www.facebook.com/groups/thethrivingfemaleentrepreneurs",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 122,
+          "name": "The Thriving Female Entrepreneurs",
+          "original_url": "https://www.facebook.com/groups/thethrivingfemaleentrepreneurs",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 161,
+          "name": "The Thriving Female Entrepreneurs",
+          "original_url": "https://www.facebook.com/groups/thethrivingfemaleentrepreneurs",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 201,
+          "name": "The Thriving Female Entrepreneurs",
+          "original_url": "https://www.facebook.com/groups/thethrivingfemaleentrepreneurs",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 287,
+          "name": "The Thriving Female Entrepreneurs",
+          "original_url": "https://www.facebook.com/groups/thethrivingfemaleentrepreneurs",
+          "original_category": "fb group"
+        }
+      ]
+    },
+    {
+      "url": "https://www.facebook.com/groups/CompassionateFemaleEntrepreneurs",
+      "name": "Compassionate Female Entrepreneurs",
+      "category": "fb group",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 55,
+          "name": "Compassionate Female Entrepreneurs",
+          "original_url": "https://www.facebook.com/groups/CompassionateFemaleEntrepreneurs",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 60,
+          "name": "Compassionate Female Entrepreneurs",
+          "original_url": "https://www.facebook.com/groups/CompassionateFemaleEntrepreneurs",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 134,
+          "name": "Compassionate Female Entrepreneurs",
+          "original_url": "https://www.facebook.com/groups/CompassionateFemaleEntrepreneurs",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 158,
+          "name": "Compassionate Female Entrepreneurs",
+          "original_url": "https://www.facebook.com/groups/CompassionateFemaleEntrepreneurs",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 195,
+          "name": "Compassionate Female Entrepreneurs",
+          "original_url": "https://www.facebook.com/groups/CompassionateFemaleEntrepreneurs",
+          "original_category": "fb group"
+        }
+      ]
+    },
+    {
+      "url": "https://www.facebook.com/groups/MeantForMoreForPassionDrivenEntrepreneurs",
+      "name": "Meant For More For Passion-Driven Entrepreneurs",
+      "category": "fb group",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 56,
+          "name": "Meant For More For Passion-Driven Entrepreneurs",
+          "original_url": "https://www.facebook.com/groups/MeantForMoreForPassionDrivenEntrepreneurs",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 117,
+          "name": "Meant For More For Passion-Driven Entrepreneurs",
+          "original_url": "https://www.facebook.com/groups/MeantForMoreForPassionDrivenEntrepreneurs",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 148,
+          "name": "Meant For More For Passion-Driven Entrepreneurs",
+          "original_url": "https://www.facebook.com/groups/MeantForMoreForPassionDrivenEntrepreneurs",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 156,
+          "name": "Meant For More For Passion-Driven Entrepreneurs",
+          "original_url": "https://www.facebook.com/groups/MeantForMoreForPassionDrivenEntrepreneurs",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 182,
+          "name": "Meant For More For Passion-Driven Entrepreneurs",
+          "original_url": "https://www.facebook.com/groups/MeantForMoreForPassionDrivenEntrepreneurs",
+          "original_category": "fb group"
+        }
+      ]
+    },
+    {
+      "url": "https://www.facebook.com/groups/IncomeFunnelsandAutomation/discussion/preview",
+      "name": "Income Funnels and Automation",
+      "category": "fb group",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 57,
+          "name": "Income Funnels and Automation",
+          "original_url": "https://www.facebook.com/groups/IncomeFunnelsandAutomation/discussion/preview",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 62,
+          "name": "Income Funnels and Automation",
+          "original_url": "https://www.facebook.com/groups/IncomeFunnelsandAutomation/discussion/preview",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 151,
+          "name": "Income Funnels and Automation",
+          "original_url": "https://www.facebook.com/groups/IncomeFunnelsandAutomation/discussion/preview",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 159,
+          "name": "Income Funnels and Automation",
+          "original_url": "https://www.facebook.com/groups/IncomeFunnelsandAutomation/discussion/preview",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 282,
+          "name": "Income Funnels and Automation",
+          "original_url": "https://www.facebook.com/groups/IncomeFunnelsandAutomation/discussion/preview",
+          "original_category": "fb group"
+        }
+      ]
+    },
+    {
+      "url": "https://www.facebook.com/groups/buildingbossladies",
+      "name": "Building Boss Ladies",
+      "category": "fb group",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 58,
+          "name": "Building Boss Ladies",
+          "original_url": "https://www.facebook.com/groups/buildingbossladies",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 67,
+          "name": "Building Boss Ladies",
+          "original_url": "https://www.facebook.com/groups/buildingbossladies",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 98,
+          "name": "Building Boss Ladies",
+          "original_url": "https://www.facebook.com/groups/buildingbossladies",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 103,
+          "name": "Building Boss Ladies",
+          "original_url": "https://www.facebook.com/groups/buildingbossladies",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 137,
+          "name": "Building Boss Ladies",
+          "original_url": "https://www.facebook.com/groups/buildingbossladies",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 173,
+          "name": "Building Boss Ladies",
+          "original_url": "https://www.facebook.com/groups/buildingbossladies",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 181,
+          "name": "Building Boss Ladies",
+          "original_url": "https://www.facebook.com/groups/buildingbossladies",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 194,
+          "name": "Building Boss Ladies",
+          "original_url": "https://www.facebook.com/groups/buildingbossladies",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 268,
+          "name": "Building Boss Ladies",
+          "original_url": "https://www.facebook.com/groups/buildingbossladies",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 276,
+          "name": "Building Boss Ladies",
+          "original_url": "https://www.facebook.com/groups/buildingbossladies",
+          "original_category": "fb group"
+        }
+      ]
+    },
+    {
+      "url": "https://www.facebook.com/groups/bigbreakbranding",
+      "name": "Big Break Branding",
+      "category": "fb group",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 59,
+          "name": "Big Break Branding",
+          "original_url": "https://www.facebook.com/groups/bigbreakbranding",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 95,
+          "name": "Big Break Branding",
+          "original_url": "https://www.facebook.com/groups/bigbreakbranding",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 130,
+          "name": "Big Break Branding",
+          "original_url": "https://www.facebook.com/groups/bigbreakbranding",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 132,
+          "name": "Big Break Branding",
+          "original_url": "https://www.facebook.com/groups/bigbreakbranding",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 167,
+          "name": "Big Break Branding",
+          "original_url": "https://www.facebook.com/groups/bigbreakbranding",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 176,
+          "name": "Big Break Branding",
+          "original_url": "https://www.facebook.com/groups/bigbreakbranding",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 207,
+          "name": "Big Break Branding",
+          "original_url": "https://www.facebook.com/groups/bigbreakbranding",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 236,
+          "name": "Big Break Branding",
+          "original_url": "https://www.facebook.com/groups/bigbreakbranding",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 252,
+          "name": "Big Break Branding",
+          "original_url": "https://www.facebook.com/groups/bigbreakbranding",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 285,
+          "name": "Big Break Branding",
+          "original_url": "https://www.facebook.com/groups/bigbreakbranding",
+          "original_category": "fb group"
+        }
+      ]
+    },
+    {
+      "url": "https://www.facebook.com/groups/thefearlesssolopreneur",
+      "name": "The Fearless Solopreneur",
+      "category": "fb group",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 64,
+          "name": "The Fearless Solopreneur",
+          "original_url": "https://www.facebook.com/groups/thefearlesssolopreneur",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 86,
+          "name": "The Fearless Solopreneur",
+          "original_url": "https://www.facebook.com/groups/thefearlesssolopreneur",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 107,
+          "name": "The Fearless Solopreneur",
+          "original_url": "https://www.facebook.com/groups/thefearlesssolopreneur",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 128,
+          "name": "The Fearless Solopreneur",
+          "original_url": "https://www.facebook.com/groups/thefearlesssolopreneur",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 177,
+          "name": "The Fearless Solopreneur",
+          "original_url": "https://www.facebook.com/groups/thefearlesssolopreneur",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 204,
+          "name": "The Fearless Solopreneur",
+          "original_url": "https://www.facebook.com/groups/thefearlesssolopreneur",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 205,
+          "name": "The Fearless Solopreneur",
+          "original_url": "https://www.facebook.com/groups/thefearlesssolopreneur",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 222,
+          "name": "The Fearless Solopreneur",
+          "original_url": "https://www.facebook.com/groups/thefearlesssolopreneur",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 231,
+          "name": "The Fearless Solopreneur",
+          "original_url": "https://www.facebook.com/groups/thefearlesssolopreneur",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 241,
+          "name": "The Fearless Solopreneur",
+          "original_url": "https://www.facebook.com/groups/thefearlesssolopreneur",
+          "original_category": "fb group"
+        }
+      ]
+    },
+    {
+      "url": "https://www.facebook.com/groups/busyworkingwomen/?ref=br_rs",
+      "name": "Busy Working Women",
+      "category": "fb group",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 66,
+          "name": "Busy Working Women",
+          "original_url": "https://www.facebook.com/groups/busyworkingwomen/?ref=br_rs",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 142,
+          "name": "Busy Working Women",
+          "original_url": "https://www.facebook.com/groups/busyworkingwomen/?ref=br_rs",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 154,
+          "name": "Busy Working Women",
+          "original_url": "https://www.facebook.com/groups/busyworkingwomen/?ref=br_rs",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 213,
+          "name": "Busy Working Women",
+          "original_url": "https://www.facebook.com/groups/busyworkingwomen/?ref=br_rs",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 220,
+          "name": "Busy Working Women",
+          "original_url": "https://www.facebook.com/groups/busyworkingwomen/?ref=br_rs",
+          "original_category": "fb group"
+        }
+      ]
+    },
+    {
+      "url": "https://www.facebook.com/groups/womenbizowners/",
+      "name": "Women Biz Owners",
+      "category": "fb group",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 68,
+          "name": "Women Biz Owners",
+          "original_url": "https://www.facebook.com/groups/womenbizowners/",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 141,
+          "name": "Women Biz Owners",
+          "original_url": "https://www.facebook.com/groups/womenbizowners/",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 187,
+          "name": "Women Biz Owners",
+          "original_url": "https://www.facebook.com/groups/womenbizowners/",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 260,
+          "name": "Women Biz Owners",
+          "original_url": "https://www.facebook.com/groups/womenbizowners/",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 272,
+          "name": "Women Biz Owners",
+          "original_url": "https://www.facebook.com/groups/womenbizowners/",
+          "original_category": "fb group"
+        }
+      ]
+    },
+    {
+      "url": "https://www.facebook.com/groups/startinganonlinebusiness",
+      "name": "Starting an Online Business",
+      "category": "fb group",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 69,
+          "name": "Starting an Online Business",
+          "original_url": "https://www.facebook.com/groups/startinganonlinebusiness",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 139,
+          "name": "Starting an Online Business",
+          "original_url": "https://www.facebook.com/groups/startinganonlinebusiness",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 190,
+          "name": "Starting an Online Business",
+          "original_url": "https://www.facebook.com/groups/startinganonlinebusiness",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 229,
+          "name": "Starting an Online Business",
+          "original_url": "https://www.facebook.com/groups/startinganonlinebusiness",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 266,
+          "name": "Starting an Online Business",
+          "original_url": "https://www.facebook.com/groups/startinganonlinebusiness",
+          "original_category": "fb group"
+        }
+      ]
+    },
+    {
+      "url": "https://www.facebook.com/groups/bfpbw",
+      "name": "BFPBW",
+      "category": "fb group",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 72,
+          "name": "BFPBW",
+          "original_url": "https://www.facebook.com/groups/bfpbw",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 114,
+          "name": "BFPBW",
+          "original_url": "https://www.facebook.com/groups/bfpbw",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 178,
+          "name": "BFPBW",
+          "original_url": "https://www.facebook.com/groups/bfpbw",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 192,
+          "name": "BFPBW",
+          "original_url": "https://www.facebook.com/groups/bfpbw",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 284,
+          "name": "BFPBW",
+          "original_url": "https://www.facebook.com/groups/bfpbw",
+          "original_category": "fb group"
+        }
+      ]
+    },
+    {
+      "url": "https://www.facebook.com/groups/entrepreneursthrivinginbusiness",
+      "name": "Entrepreneurs Thriving in Business",
+      "category": "fb group",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 74,
+          "name": "Entrepreneurs Thriving in Business",
+          "original_url": "https://www.facebook.com/groups/entrepreneursthrivinginbusiness",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 157,
+          "name": "Entrepreneurs Thriving in Business",
+          "original_url": "https://www.facebook.com/groups/entrepreneursthrivinginbusiness",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 238,
+          "name": "Entrepreneurs Thriving in Business",
+          "original_url": "https://www.facebook.com/groups/entrepreneursthrivinginbusiness",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 262,
+          "name": "Entrepreneurs Thriving in Business",
+          "original_url": "https://www.facebook.com/groups/entrepreneursthrivinginbusiness",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 286,
+          "name": "Entrepreneurs Thriving in Business",
+          "original_url": "https://www.facebook.com/groups/entrepreneursthrivinginbusiness",
+          "original_category": "fb group"
+        }
+      ]
+    },
+    {
+      "url": "https://www.facebook.com/groups/ClubhouseGrowthLounge/",
+      "name": "Clubhouse Growth Lounge",
+      "category": "fb group",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 76,
+          "name": "Clubhouse Growth Lounge",
+          "original_url": "https://www.facebook.com/groups/ClubhouseGrowthLounge/",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 96,
+          "name": "Clubhouse Growth Lounge",
+          "original_url": "https://www.facebook.com/groups/ClubhouseGrowthLounge/",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 145,
+          "name": "Clubhouse Growth Lounge",
+          "original_url": "https://www.facebook.com/groups/ClubhouseGrowthLounge/",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 149,
+          "name": "Clubhouse Growth Lounge",
+          "original_url": "https://www.facebook.com/groups/ClubhouseGrowthLounge/",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 218,
+          "name": "Clubhouse Growth Lounge",
+          "original_url": "https://www.facebook.com/groups/ClubhouseGrowthLounge/",
+          "original_category": "fb group"
+        }
+      ]
+    },
+    {
+      "url": "https://www.facebook.com/groups/ambitiouswomenonline/",
+      "name": "Ambitious Women Online",
+      "category": "fb group",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 78,
+          "name": "Ambitious Women Online",
+          "original_url": "https://www.facebook.com/groups/ambitiouswomenonline/",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 144,
+          "name": "Ambitious Women Online",
+          "original_url": "https://www.facebook.com/groups/ambitiouswomenonline/",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 180,
+          "name": "Ambitious Women Online",
+          "original_url": "https://www.facebook.com/groups/ambitiouswomenonline/",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 209,
+          "name": "Ambitious Women Online",
+          "original_url": "https://www.facebook.com/groups/ambitiouswomenonline/",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 235,
+          "name": "Ambitious Women Online",
+          "original_url": "https://www.facebook.com/groups/ambitiouswomenonline/",
+          "original_category": "fb group"
+        }
+      ]
+    },
+    {
+      "url": "https://www.facebook.com/groups/impossiblegirls",
+      "name": "Impossible Girls",
+      "category": "fb group",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 80,
+          "name": "Impossible Girls",
+          "original_url": "https://www.facebook.com/groups/impossiblegirls",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 97,
+          "name": "Impossible Girls",
+          "original_url": "https://www.facebook.com/groups/impossiblegirls",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 125,
+          "name": "Impossible Girls",
+          "original_url": "https://www.facebook.com/groups/impossiblegirls",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 129,
+          "name": "Impossible Girls",
+          "original_url": "https://www.facebook.com/groups/impossiblegirls",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 237,
+          "name": "Impossible Girls",
+          "original_url": "https://www.facebook.com/groups/impossiblegirls",
+          "original_category": "fb group"
+        }
+      ]
+    },
+    {
+      "url": "https://www.facebook.com/groups/amazingwomenentrepreneurs",
+      "name": "Amazing Women Entrepreneurs",
+      "category": "fb group",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 83,
+          "name": "Amazing Women Entrepreneurs",
+          "original_url": "https://www.facebook.com/groups/amazingwomenentrepreneurs",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 113,
+          "name": "Amazing Women Entrepreneurs",
+          "original_url": "https://www.facebook.com/groups/amazingwomenentrepreneurs",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 153,
+          "name": "Amazing Women Entrepreneurs",
+          "original_url": "https://www.facebook.com/groups/amazingwomenentrepreneurs",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 245,
+          "name": "Amazing Women Entrepreneurs",
+          "original_url": "https://www.facebook.com/groups/amazingwomenentrepreneurs",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 253,
+          "name": "Amazing Women Entrepreneurs",
+          "original_url": "https://www.facebook.com/groups/amazingwomenentrepreneurs",
+          "original_category": "fb group"
+        }
+      ]
+    },
+    {
+      "url": "https://www.facebook.com/groups/fearlessfemalestartupentrepreneurs/",
+      "name": "Fearless Female Startup Entrepreneurs",
+      "category": "fb group",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 84,
+          "name": "Fearless Female Startup Entrepreneurs",
+          "original_url": "https://www.facebook.com/groups/fearlessfemalestartupentrepreneurs/",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 184,
+          "name": "Fearless Female Startup Entrepreneurs",
+          "original_url": "https://www.facebook.com/groups/fearlessfemalestartupentrepreneurs/",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 265,
+          "name": "Fearless Female Startup Entrepreneurs",
+          "original_url": "https://www.facebook.com/groups/fearlessfemalestartupentrepreneurs/",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 270,
+          "name": "Fearless Female Startup Entrepreneurs",
+          "original_url": "https://www.facebook.com/groups/fearlessfemalestartupentrepreneurs/",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 281,
+          "name": "Fearless Female Startup Entrepreneurs",
+          "original_url": "https://www.facebook.com/groups/fearlessfemalestartupentrepreneurs/",
+          "original_category": "fb group"
+        }
+      ]
+    },
+    {
+      "url": "https://www.facebook.com/groups/raiseyourbarcreatetheresultsyouwant/discussion/preview",
+      "name": "Raise Your Bar - Create the Results You Want",
+      "category": "fb group",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 85,
+          "name": "Raise Your Bar - Create the Results You Want",
+          "original_url": "https://www.facebook.com/groups/raiseyourbarcreatetheresultsyouwant/discussion/preview",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 109,
+          "name": "Raise Your Bar - Create the Results You Want",
+          "original_url": "https://www.facebook.com/groups/raiseyourbarcreatetheresultsyouwant/discussion/preview",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 116,
+          "name": "Raise Your Bar - Create the Results You Want",
+          "original_url": "https://www.facebook.com/groups/raiseyourbarcreatetheresultsyouwant/discussion/preview",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 203,
+          "name": "Raise Your Bar - Create the Results You Want",
+          "original_url": "https://www.facebook.com/groups/raiseyourbarcreatetheresultsyouwant/discussion/preview",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 246,
+          "name": "Raise Your Bar - Create the Results You Want",
+          "original_url": "https://www.facebook.com/groups/raiseyourbarcreatetheresultsyouwant/discussion/preview",
+          "original_category": "fb group"
+        }
+      ]
+    },
+    {
+      "url": "https://www.facebook.com/groups/Entrepreneursabundance",
+      "name": "Entrepreneurs Abundance",
+      "category": "fb group",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 88,
+          "name": "Entrepreneurs Abundance",
+          "original_url": "https://www.facebook.com/groups/Entrepreneursabundance",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 102,
+          "name": "Entrepreneurs Abundance",
+          "original_url": "https://www.facebook.com/groups/Entrepreneursabundance",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 174,
+          "name": "Entrepreneurs Abundance",
+          "original_url": "https://www.facebook.com/groups/Entrepreneursabundance",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 199,
+          "name": "Entrepreneurs Abundance",
+          "original_url": "https://www.facebook.com/groups/Entrepreneursabundance",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 225,
+          "name": "Entrepreneurs Abundance",
+          "original_url": "https://www.facebook.com/groups/Entrepreneursabundance",
+          "original_category": "fb group"
+        }
+      ]
+    },
+    {
+      "url": "https://www.facebook.com/groups/podcasting4entrepreneurs",
+      "name": "Podcasting 4 Entrepreneurs",
+      "category": "fb group",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 91,
+          "name": "Podcasting 4 Entrepreneurs",
+          "original_url": "https://www.facebook.com/groups/podcasting4entrepreneurs",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 111,
+          "name": "Podcasting 4 Entrepreneurs",
+          "original_url": "https://www.facebook.com/groups/podcasting4entrepreneurs",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 118,
+          "name": "Podcasting 4 Entrepreneurs",
+          "original_url": "https://www.facebook.com/groups/podcasting4entrepreneurs",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 189,
+          "name": "Podcasting 4 Entrepreneurs",
+          "original_url": "https://www.facebook.com/groups/podcasting4entrepreneurs",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 256,
+          "name": "Podcasting 4 Entrepreneurs",
+          "original_url": "https://www.facebook.com/groups/podcasting4entrepreneurs",
+          "original_category": "fb group"
+        }
+      ]
+    },
+    {
+      "url": "https://www.facebook.com/groups/businesswomenwhoinspire/about/",
+      "name": "Business Women Who Inspire",
+      "category": "fb group",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 92,
+          "name": "Business Women Who Inspire",
+          "original_url": "https://www.facebook.com/groups/businesswomenwhoinspire/about/",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 106,
+          "name": "Business Women Who Inspire",
+          "original_url": "https://www.facebook.com/groups/businesswomenwhoinspire/about/",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 175,
+          "name": "Business Women Who Inspire",
+          "original_url": "https://www.facebook.com/groups/businesswomenwhoinspire/about/",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 240,
+          "name": "Business Women Who Inspire",
+          "original_url": "https://www.facebook.com/groups/businesswomenwhoinspire/about/",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 257,
+          "name": "Business Women Who Inspire",
+          "original_url": "https://www.facebook.com/groups/businesswomenwhoinspire/about/",
+          "original_category": "fb group"
+        }
+      ]
+    },
+    {
+      "url": "https://www.facebook.com/groups/thesixfiguresuccesssociety",
+      "name": "The Six-Figure Success Society",
+      "category": "fb group",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 100,
+          "name": "The Six-Figure Success Society",
+          "original_url": "https://www.facebook.com/groups/thesixfiguresuccesssociety",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 108,
+          "name": "The Six-Figure Success Society",
+          "original_url": "https://www.facebook.com/groups/thesixfiguresuccesssociety",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 115,
+          "name": "The Six-Figure Success Society",
+          "original_url": "https://www.facebook.com/groups/thesixfiguresuccesssociety",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 124,
+          "name": "The Six-Figure Success Society",
+          "original_url": "https://www.facebook.com/groups/thesixfiguresuccesssociety",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 138,
+          "name": "The Six-Figure Success Society",
+          "original_url": "https://www.facebook.com/groups/thesixfiguresuccesssociety",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 164,
+          "name": "The Six-Figure Success Society",
+          "original_url": "https://www.facebook.com/groups/thesixfiguresuccesssociety",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 230,
+          "name": "The Six-Figure Success Society",
+          "original_url": "https://www.facebook.com/groups/thesixfiguresuccesssociety",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 251,
+          "name": "The Six-Figure Success Society",
+          "original_url": "https://www.facebook.com/groups/thesixfiguresuccesssociety",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 269,
+          "name": "The Six-Figure Success Society",
+          "original_url": "https://www.facebook.com/groups/thesixfiguresuccesssociety",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 278,
+          "name": "The Six-Figure Success Society",
+          "original_url": "https://www.facebook.com/groups/thesixfiguresuccesssociety",
+          "original_category": "fb group"
+        }
+      ]
+    },
+    {
+      "url": "https://www.facebook.com/groups/lovingcourageously",
+      "name": "Loving Courageously",
+      "category": "fb group",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 101,
+          "name": "Loving Courageously",
+          "original_url": "https://www.facebook.com/groups/lovingcourageously",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 112,
+          "name": "Loving Courageously",
+          "original_url": "https://www.facebook.com/groups/lovingcourageously",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 217,
+          "name": "Loving Courageously",
+          "original_url": "https://www.facebook.com/groups/lovingcourageously",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 250,
+          "name": "Loving Courageously",
+          "original_url": "https://www.facebook.com/groups/lovingcourageously",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 283,
+          "name": "Loving Courageously",
+          "original_url": "https://www.facebook.com/groups/lovingcourageously",
+          "original_category": "fb group"
+        }
+      ]
+    },
+    {
+      "url": "https://www.facebook.com/groups/womeninalignmentgroup",
+      "name": "Women in Alignment Group",
+      "category": "fb group",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 120,
+          "name": "Women in Alignment Group",
+          "original_url": "https://www.facebook.com/groups/womeninalignmentgroup",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 210,
+          "name": "Women in Alignment Group",
+          "original_url": "https://www.facebook.com/groups/womeninalignmentgroup",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 211,
+          "name": "Women in Alignment Group",
+          "original_url": "https://www.facebook.com/groups/womeninalignmentgroup",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 258,
+          "name": "Women in Alignment Group",
+          "original_url": "https://www.facebook.com/groups/womeninalignmentgroup",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 277,
+          "name": "Women in Alignment Group",
+          "original_url": "https://www.facebook.com/groups/womeninalignmentgroup",
+          "original_category": "fb group"
+        }
+      ]
+    },
+    {
+      "url": "https://www.facebook.com/groups/GlobalSpeakersandAuthors",
+      "name": "Global Speakers and Authors",
+      "category": "fb group",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 121,
+          "name": "Global Speakers and Authors",
+          "original_url": "https://www.facebook.com/groups/GlobalSpeakersandAuthors",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 200,
+          "name": "Global Speakers and Authors",
+          "original_url": "https://www.facebook.com/groups/GlobalSpeakersandAuthors",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 215,
+          "name": "Global Speakers and Authors",
+          "original_url": "https://www.facebook.com/groups/GlobalSpeakersandAuthors",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 247,
+          "name": "Global Speakers and Authors",
+          "original_url": "https://www.facebook.com/groups/GlobalSpeakersandAuthors",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 255,
+          "name": "Global Speakers and Authors",
+          "original_url": "https://www.facebook.com/groups/GlobalSpeakersandAuthors",
+          "original_category": "fb group"
+        }
+      ]
+    },
+    {
+      "url": "https://www.facebook.com/groups/fiercebusinessbabes",
+      "name": "Fierce Business Babes",
+      "category": "fb group",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 133,
+          "name": "Fierce Business Babes",
+          "original_url": "https://www.facebook.com/groups/fiercebusinessbabes",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 165,
+          "name": "Fierce Business Babes",
+          "original_url": "https://www.facebook.com/groups/fiercebusinessbabes",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 212,
+          "name": "Fierce Business Babes",
+          "original_url": "https://www.facebook.com/groups/fiercebusinessbabes",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 219,
+          "name": "Fierce Business Babes",
+          "original_url": "https://www.facebook.com/groups/fiercebusinessbabes",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 224,
+          "name": "Fierce Business Babes",
+          "original_url": "https://www.facebook.com/groups/fiercebusinessbabes",
+          "original_category": "fb group"
+        }
+      ]
+    },
+    {
+      "url": "https://www.facebook.com/groups/FearlessCreatives/discussion/preview",
+      "name": "Fearless Creatives",
+      "category": "fb group",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 136,
+          "name": "Fearless Creatives",
+          "original_url": "https://www.facebook.com/groups/FearlessCreatives/discussion/preview",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 166,
+          "name": "Fearless Creatives",
+          "original_url": "https://www.facebook.com/groups/FearlessCreatives/discussion/preview",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 171,
+          "name": "Fearless Creatives",
+          "original_url": "https://www.facebook.com/groups/FearlessCreatives/discussion/preview",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 206,
+          "name": "Fearless Creatives",
+          "original_url": "https://www.facebook.com/groups/FearlessCreatives/discussion/preview",
+          "original_category": "fb group"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 228,
+          "name": "Fearless Creatives",
+          "original_url": "https://www.facebook.com/groups/FearlessCreatives/discussion/preview",
+          "original_category": "fb group"
+        }
+      ]
+    },
+    {
+      "url": "https://www.peopleperhour.com",
+      "name": "PeoplePerHour",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 288,
+          "name": "PeoplePerHour",
+          "original_url": "https://www.peopleperhour.com/",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://www.fiverr.com",
+      "name": "Fiverr",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 289,
+          "name": "Fiverr",
+          "original_url": "https://www.fiverr.com/",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "http://www.guru.com",
+      "name": "Guru",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 290,
+          "name": "Guru",
+          "original_url": "http://www.guru.com/",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://www.truelancer.com",
+      "name": "Truelancer",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 291,
+          "name": "Truelancer",
+          "original_url": "https://www.truelancer.com/",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://freeeup.com",
+      "name": "Freeeup",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 292,
+          "name": "Freeeup",
+          "original_url": "https://freeeup.com",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://www.freelancer.com",
+      "name": "Freelancer",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 293,
+          "name": "Freelancer",
+          "original_url": "https://www.freelancer.com/",
+          "original_category": "platforms"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 372,
+          "name": "Freelancer",
+          "original_url": "https://www.freelancer.com/",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://golance.com",
+      "name": "GoLance",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 294,
+          "name": "GoLance",
+          "original_url": "https://golance.com/",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://www.onlinejobs.ph",
+      "name": "Onlinejobs PH",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 295,
+          "name": "Onlinejobs PH",
+          "original_url": "https://www.onlinejobs.ph/",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://www.myoutdesk.com",
+      "name": "MyOutdesk",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 296,
+          "name": "MyOutdesk",
+          "original_url": "https://www.myoutdesk.com/",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://zeerk.com",
+      "name": "Zeerk",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 297,
+          "name": "Zeerk",
+          "original_url": "https://zeerk.com/",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://199jobs.com",
+      "name": "199jobs",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 298,
+          "name": "199jobs",
+          "original_url": "https://199jobs.com/",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://www.outsourcely.com",
+      "name": "Outsourcely",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 299,
+          "name": "Outsourcely",
+          "original_url": "https://www.outsourcely.com/",
+          "original_category": "platforms"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 367,
+          "name": "Outsourcely",
+          "original_url": "https://www.outsourcely.com/",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://hubstaff.com",
+      "name": "Hubstaff Talent",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 300,
+          "name": "Hubstaff Talent",
+          "original_url": "https://hubstaff.com/",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://upwork.com",
+      "name": "Upwork",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 301,
+          "name": "Upwork",
+          "original_url": "https://upwork.com/",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://99designs.com",
+      "name": "99 Designs",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 302,
+          "name": "99 Designs",
+          "original_url": "https://99designs.com/",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://www.toptal.com",
+      "name": "Toptal",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 303,
+          "name": "Toptal",
+          "original_url": "https://www.toptal.com/",
+          "original_category": "platforms"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 368,
+          "name": "Toptal",
+          "original_url": "https://www.toptal.com/",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://envato.com/careers/",
+      "name": "Envato",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 304,
+          "name": "Envato",
+          "original_url": "https://envato.com/careers/",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://gotranscript.com",
+      "name": "GoTranscript",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 305,
+          "name": "GoTranscript",
+          "original_url": "https://gotranscript.com/",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "http://transcribeme.com",
+      "name": "Transcribe Me",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 306,
+          "name": "Transcribe Me",
+          "original_url": "http://transcribeme.com/",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://scribie.com",
+      "name": "Scribie",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 307,
+          "name": "Scribie",
+          "original_url": "https://scribie.com/",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://www.verbit.ai",
+      "name": "Verbit",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 308,
+          "name": "Verbit",
+          "original_url": "https://www.verbit.ai/",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://www.rev.com",
+      "name": "Rev",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 309,
+          "name": "Rev",
+          "original_url": "https://www.rev.com",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://www.speechpad.com/worker",
+      "name": "Speechpad",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 310,
+          "name": "Speechpad",
+          "original_url": "https://www.speechpad.com/worker",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://appenonline.appen.com.au/login",
+      "name": "Appen",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 311,
+          "name": "Appen",
+          "original_url": "https://appenonline.appen.com.au/login",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "http://www.civimom.com",
+      "name": "Civimom",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 312,
+          "name": "Civimom",
+          "original_url": "http://www.civimom.com/",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://waywithwordsjobs.com",
+      "name": "Way With Words",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 313,
+          "name": "Way With Words",
+          "original_url": "https://waywithwordsjobs.com/",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "http://www.accutranglobal.com",
+      "name": "Accutran Global",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 314,
+          "name": "Accutran Global",
+          "original_url": "http://www.accutranglobal.com/",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "http://crowdsurfwork.com",
+      "name": "Crowd Surf Work",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 315,
+          "name": "Crowd Surf Work",
+          "original_url": "http://crowdsurfwork.com",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://verbalink.com/jobs",
+      "name": "Verbalink",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 316,
+          "name": "Verbalink",
+          "original_url": "https://verbalink.com/jobs",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://workshop.castingwords.com/worker/login",
+      "name": "Casting Words",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 317,
+          "name": "Casting Words",
+          "original_url": "https://workshop.castingwords.com/worker/login",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "http://www.analysia.com",
+      "name": "Analysia",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 318,
+          "name": "Analysia",
+          "original_url": "http://www.analysia.com/",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "http://www.enrollapp.com",
+      "name": "Enroll App",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 319,
+          "name": "Enroll App",
+          "original_url": "http://www.enrollapp.com",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "http://startuplift.com/get-paid-to-provide-feedback/",
+      "name": "Start Uplift",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 320,
+          "name": "Start Uplift",
+          "original_url": "http://startuplift.com/get-paid-to-provide-feedback/",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://www.testingtime.com/en/become-a-paid-testuser",
+      "name": "Testing Time",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 321,
+          "name": "Testing Time",
+          "original_url": "https://www.testingtime.com/en/become-a-paid-testuser",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://www.trymyui.com/worker/signup",
+      "name": "Try My UI",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 322,
+          "name": "Try My UI",
+          "original_url": "https://www.trymyui.com/worker/signup",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://www.userfeel.com",
+      "name": "User Feel",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 323,
+          "name": "User Feel",
+          "original_url": "https://www.userfeel.com",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://www.userlytics.com",
+      "name": "Userlytics",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 324,
+          "name": "Userlytics",
+          "original_url": "https://www.userlytics.com",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://usertest.io/Tester/Signup",
+      "name": "User Test",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 325,
+          "name": "User Test",
+          "original_url": "https://usertest.io/Tester/Signup",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://www.usertesting.com",
+      "name": "User Testing",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 326,
+          "name": "User Testing",
+          "original_url": "https://www.usertesting.com",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://www.utest.com",
+      "name": "Utest",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 327,
+          "name": "Utest",
+          "original_url": "https://www.utest.com",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://app.whatusersdo.com/login",
+      "name": "What Users Do",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 328,
+          "name": "What Users Do",
+          "original_url": "https://app.whatusersdo.com/login",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://remotasks.com/r/5CVBKI56",
+      "name": "Remote Tasks",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 329,
+          "name": "Remote Tasks",
+          "original_url": "https://remotasks.com/r/5CVBKI56",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://www.humanatic.com",
+      "name": "Humanatic",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 330,
+          "name": "Humanatic",
+          "original_url": "https://www.humanatic.com",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://microwork.io",
+      "name": "Microwork",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 331,
+          "name": "Microwork",
+          "original_url": "https://microwork.io",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://voicebunny.com",
+      "name": "Voice Bunny",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 332,
+          "name": "Voice Bunny",
+          "original_url": "https://voicebunny.com",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://www.voices.com",
+      "name": "Voices",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 333,
+          "name": "Voices",
+          "original_url": "https://www.voices.com",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://askwonder.com/join",
+      "name": "Ask Wonder",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 334,
+          "name": "Ask Wonder",
+          "original_url": "https://askwonder.com/join",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "http://www.capitaltyping.com/employment/",
+      "name": "Capital Typing",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 335,
+          "name": "Capital Typing",
+          "original_url": "http://www.capitaltyping.com/employment/",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://picoworkers.com",
+      "name": "Pico Workers",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 336,
+          "name": "Pico Workers",
+          "original_url": "https://picoworkers.com/",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://www.mturk.com/mturk/",
+      "name": "Mturk",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 337,
+          "name": "Mturk",
+          "original_url": "https://www.mturk.com/mturk/",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://www.indeed.com",
+      "name": "Indeed",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 338,
+          "name": "Indeed",
+          "original_url": "https://www.indeed.com/",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://www.linkedin.com",
+      "name": "LinkedIn",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 339,
+          "name": "LinkedIn",
+          "original_url": "https://www.linkedin.com/",
+          "original_category": "platforms"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 370,
+          "name": "LinkedIn",
+          "original_url": "https://www.linkedin.com/",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "http://playboard.co",
+      "name": "Playboard.co",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 340,
+          "name": "Playboard.co",
+          "original_url": "http://playboard.co/",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "http://redfin.co",
+      "name": "Redfin.co",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 341,
+          "name": "Redfin.co",
+          "original_url": "http://redfin.co/",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://www.flexjobs.com",
+      "name": "FlexJobs",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 342,
+          "name": "FlexJobs",
+          "original_url": "https://www.flexjobs.com/",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://weworkremotely.com",
+      "name": "We Work Remotely",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 343,
+          "name": "We Work Remotely",
+          "original_url": "https://weworkremotely.com/",
+          "original_category": "platforms"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 356,
+          "name": "We Work Remotely",
+          "original_url": "https://weworkremotely.com/",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://skillcrush.com",
+      "name": "Skillcrush",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 344,
+          "name": "Skillcrush",
+          "original_url": "https://skillcrush.com/",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://remote.co",
+      "name": "Remote.co",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 345,
+          "name": "Remote.co",
+          "original_url": "https://remote.co/",
+          "original_category": "platforms"
+        },
+        {
+          "sheet": "Sheet1",
+          "row": 351,
+          "name": "Remote.co",
+          "original_url": "https://remote.co/",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://markethire.com",
+      "name": "Market Hire",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 346,
+          "name": "Market Hire",
+          "original_url": "https://markethire.com/",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://wellfound.com",
+      "name": "Wellfound",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 348,
+          "name": "Wellfound",
+          "original_url": "https://wellfound.com/",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://justremote.co",
+      "name": "JustRemote",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 349,
+          "name": "JustRemote",
+          "original_url": "https://justremote.co/",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://workew.com",
+      "name": "Workew",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 352,
+          "name": "Workew",
+          "original_url": "https://workew.com/",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://wantremote.com",
+      "name": "WantRemote",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 353,
+          "name": "WantRemote",
+          "original_url": "https://wantremote.com/",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://remote4me.com",
+      "name": "Remote4Me",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 354,
+          "name": "Remote4Me",
+          "original_url": "https://remote4me.com/",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://flexjobs.com",
+      "name": "FlexJobs",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 355,
+          "name": "FlexJobs",
+          "original_url": "https://flexjobs.com/",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://talent.hubstaff.com",
+      "name": "Hubstaff Talent",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 357,
+          "name": "Hubstaff Talent",
+          "original_url": "https://talent.hubstaff.com/",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://remotive.com",
+      "name": "Remotive",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 358,
+          "name": "Remotive",
+          "original_url": "https://remotive.com/",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://skipthedrive.com",
+      "name": "SkipTheDrive",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 359,
+          "name": "SkipTheDrive",
+          "original_url": "https://skipthedrive.com/",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://workingnomads.com/jobs",
+      "name": "Working Nomads",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 360,
+          "name": "Working Nomads",
+          "original_url": "https://workingnomads.com/jobs",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://remoters.net",
+      "name": "Remoters",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 361,
+          "name": "Remoters",
+          "original_url": "https://remoters.net/",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://odeskwork.com",
+      "name": "Odeskwork",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 362,
+          "name": "Odeskwork",
+          "original_url": "https://odeskwork.com/",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://jobboardsearch.com",
+      "name": "Job Board Search",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 363,
+          "name": "Job Board Search",
+          "original_url": "https://jobboardsearch.com/",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://jsremotely.com",
+      "name": "JS Remotely",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 364,
+          "name": "JS Remotely",
+          "original_url": "https://jsremotely.com/",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://remoteok.com",
+      "name": "Remote OK",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 365,
+          "name": "Remote OK",
+          "original_url": "https://remoteok.com/",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://in.indeed.com",
+      "name": "Indeed (India)",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 366,
+          "name": "Indeed (India)",
+          "original_url": "https://in.indeed.com/",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://www.virtualvocations.com",
+      "name": "Virtual Vocations",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 369,
+          "name": "Virtual Vocations",
+          "original_url": "https://www.virtualvocations.com/",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://www.upwork.com",
+      "name": "Upwork",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 371,
+          "name": "Upwork",
+          "original_url": "https://www.upwork.com/",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://www.reddit.com/r/forhire/",
+      "name": "r/forhire",
+      "category": "subreddit",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 373,
+          "name": "r/forhire",
+          "original_url": "https://www.reddit.com/r/forhire/",
+          "original_category": "subreddit"
+        }
+      ]
+    },
+    {
+      "url": "https://www.reddit.com/r/DesignJobs/",
+      "name": "r/DesignJobs",
+      "category": "subreddit",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 374,
+          "name": "r/DesignJobs",
+          "original_url": "https://www.reddit.com/r/DesignJobs/",
+          "original_category": "subreddit"
+        }
+      ]
+    },
+    {
+      "url": "https://www.reddit.com/r/Jobbit/",
+      "name": "r/Jobbit",
+      "category": "subreddit",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 375,
+          "name": "r/Jobbit",
+          "original_url": "https://www.reddit.com/r/Jobbit/",
+          "original_category": "subreddit"
+        }
+      ]
+    },
+    {
+      "url": "https://www.reddit.com/r/freelance/",
+      "name": "r/freelance",
+      "category": "subreddit",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 376,
+          "name": "r/freelance",
+          "original_url": "https://www.reddit.com/r/freelance/",
+          "original_category": "subreddit"
+        }
+      ]
+    },
+    {
+      "url": "https://www.reddit.com/r/forhireuk/",
+      "name": "r/forhireuk",
+      "category": "subreddit",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 377,
+          "name": "r/forhireuk",
+          "original_url": "https://www.reddit.com/r/forhireuk/",
+          "original_category": "subreddit"
+        }
+      ]
+    },
+    {
+      "url": "https://www.reddit.com/r/hireawriter/",
+      "name": "r/hireawriter",
+      "category": "subreddit",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 378,
+          "name": "r/hireawriter",
+          "original_url": "https://www.reddit.com/r/hireawriter/",
+          "original_category": "subreddit"
+        }
+      ]
+    },
+    {
+      "url": "https://www.reddit.com/r/freelanceWriters/",
+      "name": "r/freelanceWriters",
+      "category": "subreddit",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 379,
+          "name": "r/freelanceWriters",
+          "original_url": "https://www.reddit.com/r/freelanceWriters/",
+          "original_category": "subreddit"
+        }
+      ]
+    },
+    {
+      "url": "https://www.reddit.com/r/RemoteJobs/",
+      "name": "r/RemoteJobs",
+      "category": "subreddit",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 380,
+          "name": "r/RemoteJobs",
+          "original_url": "https://www.reddit.com/r/RemoteJobs/",
+          "original_category": "subreddit"
+        }
+      ]
+    },
+    {
+      "url": "https://www.reddit.com/r/WorkOnline/",
+      "name": "r/WorkOnline",
+      "category": "subreddit",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 381,
+          "name": "r/WorkOnline",
+          "original_url": "https://www.reddit.com/r/WorkOnline/",
+          "original_category": "subreddit"
+        }
+      ]
+    },
+    {
+      "url": "https://www.reddit.com/r/Entrepreneur/",
+      "name": "r/Entrepreneur",
+      "category": "subreddit",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 382,
+          "name": "r/Entrepreneur",
+          "original_url": "https://www.reddit.com/r/Entrepreneur/",
+          "original_category": "subreddit"
+        }
+      ]
+    },
+    {
+      "url": "https://www.reddit.com/r/smallbusiness/",
+      "name": "r/smallbusiness",
+      "category": "subreddit",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 383,
+          "name": "r/smallbusiness",
+          "original_url": "https://www.reddit.com/r/smallbusiness/",
+          "original_category": "subreddit"
+        }
+      ]
+    },
+    {
+      "url": "https://www.reddit.com/r/startups/",
+      "name": "r/startups",
+      "category": "subreddit",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 384,
+          "name": "r/startups",
+          "original_url": "https://www.reddit.com/r/startups/",
+          "original_category": "subreddit"
+        }
+      ]
+    },
+    {
+      "url": "https://www.reddit.com/r/growmybusiness/",
+      "name": "r/growmybusiness",
+      "category": "subreddit",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 385,
+          "name": "r/growmybusiness",
+          "original_url": "https://www.reddit.com/r/growmybusiness/",
+          "original_category": "subreddit"
+        }
+      ]
+    },
+    {
+      "url": "https://www.reddit.com/r/forhirecanada/",
+      "name": "r/forhirecanada",
+      "category": "subreddit",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 386,
+          "name": "r/forhirecanada",
+          "original_url": "https://www.reddit.com/r/forhirecanada/",
+          "original_category": "subreddit"
+        }
+      ]
+    },
+    {
+      "url": "https://www.reddit.com/r/digitalnomad/",
+      "name": "r/digitalnomad",
+      "category": "subreddit",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 387,
+          "name": "r/digitalnomad",
+          "original_url": "https://www.reddit.com/r/digitalnomad/",
+          "original_category": "subreddit"
+        }
+      ]
+    },
+    {
+      "url": "https://www.reddit.com/r/Jobopenings/",
+      "name": "r/Jobopenings",
+      "category": "subreddit",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 388,
+          "name": "r/Jobopenings",
+          "original_url": "https://www.reddit.com/r/Jobopenings/",
+          "original_category": "subreddit"
+        }
+      ]
+    },
+    {
+      "url": "https://www.reddit.com/r/RemoteJobr/",
+      "name": "r/RemoteJobr",
+      "category": "subreddit",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 389,
+          "name": "r/RemoteJobr",
+          "original_url": "https://www.reddit.com/r/RemoteJobr/",
+          "original_category": "subreddit"
+        }
+      ]
+    },
+    {
+      "url": "https://www.reddit.com/r/Design_Critiques/",
+      "name": "r/Design_Critiques",
+      "category": "subreddit",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 390,
+          "name": "r/Design_Critiques",
+          "original_url": "https://www.reddit.com/r/Design_Critiques/",
+          "original_category": "subreddit"
+        }
+      ]
+    },
+    {
+      "url": "https://www.reddit.com/r/Artcommissions/",
+      "name": "r/Artcommissions",
+      "category": "subreddit",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 391,
+          "name": "r/Artcommissions",
+          "original_url": "https://www.reddit.com/r/Artcommissions/",
+          "original_category": "subreddit"
+        }
+      ]
+    },
+    {
+      "url": "https://www.reddit.com/r/virtualassistant/",
+      "name": "r/virtualassistant",
+      "category": "subreddit",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 392,
+          "name": "r/virtualassistant",
+          "original_url": "https://www.reddit.com/r/virtualassistant/",
+          "original_category": "subreddit"
+        }
+      ]
+    },
+    {
+      "url": "https://orbytt.ai",
+      "name": "Orbytt",
+      "category": "platforms",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 393,
+          "name": "Orbytt",
+          "original_url": "https://orbytt.ai/",
+          "original_category": "platforms"
+        }
+      ]
+    },
+    {
+      "url": "https://bravovirtualassistants.com",
+      "name": "Bravo",
+      "category": "unclassified",
+      "access_method": "manual_review",
+      "enabled": false,
+      "source_rows": [
+        {
+          "sheet": "Sheet1",
+          "row": 394,
+          "name": "Bravo",
+          "original_url": "https://bravovirtualassistants.com/",
+          "original_category": ""
+        }
+      ]
+    }
+  ]
+}

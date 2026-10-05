@@ -1,0 +1,29 @@
+services:
+  client-finder:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    env_file:
+      - /etc/hawkins-client-finder/.env
+    environment:
+      CLIENT_FINDER_BIND: 0.0.0.0
+      CLIENT_FINDER_PORT: "8088"
+      PYTHONDONTWRITEBYTECODE: "1"
+    networks:
+      - hawkins_n8n
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8088/health', timeout=3)"
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+
+networks:
+  hawkins_n8n:
+    external: true
+    name: n8n_default

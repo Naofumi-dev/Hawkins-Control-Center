@@ -1,0 +1,9 @@
+# Build the existing application image as hawkins-client-finder:local first.
+# This replaces that backend instance; it must not create another submission consumer.
+FROM hawkins-client-finder:local
+USER root
+ENV PLAYWRIGHT_BROWSERS_PATH=/opt/hawkins-browsers
+COPY requirements-browser.txt /tmp/requirements-browser.txt
+RUN pip install --no-cache-dir -r /tmp/requirements-browser.txt \
+    && python -m playwright install --with-deps chromium
+USER finder

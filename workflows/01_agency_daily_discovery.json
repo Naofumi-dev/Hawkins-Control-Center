@@ -1,0 +1,1006 @@
+{
+  "id": "cfAgencyDailyDiscovery01",
+  "name": "Hawkins — Nancy (Client Finder Daily Discovery)",
+  "active": false,
+  "nodes": [
+    {
+      "id": "cf-discovery-schedule",
+      "name": "Daily 08:00 Manila",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 8 * * *"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "cf-discovery-manual",
+      "name": "Run Manually",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        280
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "cf-discovery-config",
+      "name": "Owner Configuration",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        240,
+        140
+      ],
+      "notesInFlow": true,
+      "notes": "Set owner user ID and private chat ID; confirm the prefilled Hawkins Supabase URL. Create a NEW dedicated Telegram bot credential named CLIENT_FINDER_TELEGRAM_BOT. Create a Bearer Auth credential CLIENT_FINDER_SERVICE_AUTH for the internal discovery service. Create a Custom Auth credential CLIENT_FINDER_SUPABASE_REST_AUTH with apikey and Authorization headers in the credential only. Configure a user-owned independent n8n error workflow before activation. Keep this workflow inactive until the live checks and activation gate pass.",
+      "parameters": {
+        "mode": "manual",
+        "includeOtherFields": false,
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cf-owner-user-id",
+              "name": "owner_user_id",
+              "type": "string",
+              "value": "YOUR_CLIENT_FINDER_TELEGRAM_USER_ID"
+            },
+            {
+              "id": "cf-owner-chat-id",
+              "name": "chat_id",
+              "type": "string",
+              "value": "YOUR_CLIENT_FINDER_TELEGRAM_PRIVATE_CHAT_ID"
+            },
+            {
+              "id": "cf-supabase-base-url",
+              "name": "supabase_base_url",
+              "type": "string",
+              "value": "https://mtdavgadkiiofwikzdtn.supabase.co"
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "cf-discovery-config-check",
+      "name": "Owner Configuration Ready?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        460,
+        140
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "cf-config-valid",
+              "leftValue": "={{ /^[0-9]+$/.test($json.owner_user_id) && /^-?[0-9]+$/.test($json.chat_id) && /^https:\\/\\/[^ ]+$/.test($json.supabase_base_url) && !$json.supabase_base_url.includes('YOUR_') }}",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "cf-discovery-config-error",
+      "name": "Configuration Missing",
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        680,
+        300
+      ],
+      "parameters": {
+        "errorType": "errorMessage",
+        "errorMessage": "Client Finder owner IDs and Supabase base URL must be configured before discovery."
+      }
+    },
+    {
+      "id": "cf-discovery-request",
+      "name": "Discover Agency Prospects",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        680,
+        80
+      ],
+      "notesInFlow": true,
+      "notes": "Internal service returns {cards:[{message_id,revision,kind,card_text}]}. It owns research, evidence, budget, deduplication, draft storage, and card eligibility. A Bearer Auth credential named CLIENT_FINDER_SERVICE_AUTH sets its required Authorization header. No prospect messages are sent here.",
+      "parameters": {
+        "method": "POST",
+        "url": "http://client-finder:8088/discover",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "{\"limit\":5}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          },
+          "timeout": 120000
+        }
+      },
+      "credentials": {
+        "httpBearerAuth": {
+          "name": "CLIENT_FINDER_SERVICE_AUTH"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "cf-discovery-service-alert",
+      "name": "Tell Owner Discovery Service Failed",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        900,
+        260
+      ],
+      "parameters": {
+        "resource": "message",
+        "operation": "sendMessage",
+        "chatId": "={{ $('Owner Configuration').first().json.chat_id }}",
+        "text": "Client Finder discovery failed before review cards could be prepared. Check service, credentials, budget, and the research diagnostics. No prospect email was sent.",
+        "additionalFields": {
+          "appendAttribution": false,
+          "disable_web_page_preview": true,
+          "parse_mode": "HTML"
+        }
+      },
+      "credentials": {
+        "telegramApi": {
+          "name": "CLIENT_FINDER_TELEGRAM_BOT"
+        }
+      }
+    },
+    {
+      "id": "cf-discovery-result-valid",
+      "name": "Discovery Result Valid?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        900,
+        80
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "cf-discovery-result-check",
+              "leftValue": "={{ Array.isArray($json.cards) && $json.cards.length <= 5 && Array.isArray($json.diagnostics) }}",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "cf-discovery-result-error",
+      "name": "Discovery Result Malformed",
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        1120,
+        280
+      ],
+      "parameters": {
+        "errorType": "errorMessage",
+        "errorMessage": "Client Finder service returned an invalid cards/diagnostics result. No review card was posted."
+      }
+    },
+    {
+      "id": "cf-discovery-has-cards",
+      "name": "Any Approval-Ready Cards?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1120,
+        80
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "cf-discovery-card-count",
+              "leftValue": "={{ $json.cards.length > 0 }}",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "cf-discovery-partial-check",
+      "name": "Partial Discovery Issues?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1340,
+        80
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "cf-discovery-partial-diagnostics",
+              "leftValue": "={{ Array.isArray($json.diagnostics) && $json.diagnostics.length > 0 }}",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "cf-discovery-partial-alert",
+      "name": "Tell Owner Partial Discovery Issues",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1560,
+        -100
+      ],
+      "parameters": {
+        "resource": "message",
+        "operation": "sendMessage",
+        "chatId": "={{ $('Owner Configuration').first().json.chat_id }}",
+        "text": "={{ ('Client Finder prepared ' + String($json.cards.length) + ' review card(s), but some research needs attention:\\n' + $json.diagnostics.slice(0,3).map(String).join('\\n').slice(0,2500)).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "disable_web_page_preview": true,
+          "parse_mode": "HTML"
+        }
+      },
+      "credentials": {
+        "telegramApi": {
+          "name": "CLIENT_FINDER_TELEGRAM_BOT"
+        }
+      },
+      "onError": "continueErrorOutput",
+      "notesInFlow": true,
+      "notes": "Partial research diagnostics are owner-visible even when review cards exist. Failure of this informational alert does not block saved cards; configure an independent error workflow before activation."
+    },
+    {
+      "id": "cf-discovery-no-cards-note",
+      "name": "Tell Owner No Ready Cards",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1340,
+        300
+      ],
+      "parameters": {
+        "resource": "message",
+        "operation": "sendMessage",
+        "chatId": "={{ $('Owner Configuration').first().json.chat_id }}",
+        "text": "={{ ('No approval-ready Client Finder cards today. Search requests: ' + String($json.searched ?? 0) + '; sites inspected: ' + String($json.inspected ?? 0) + '. ' + ($json.diagnostics.length ? 'First reasons:\\n' + $json.diagnostics.slice(0,3).map(String).join('\\n').slice(0,2500) : 'The service returned no reasons; check discovery configuration.')).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "disable_web_page_preview": true,
+          "parse_mode": "HTML"
+        }
+      },
+      "credentials": {
+        "telegramApi": {
+          "name": "CLIENT_FINDER_TELEGRAM_BOT"
+        }
+      }
+    },
+    {
+      "id": "cf-discovery-split",
+      "name": "One Item per Review Card",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        900,
+        80
+      ],
+      "parameters": {
+        "fieldToSplitOut": "cards",
+        "options": {}
+      }
+    },
+    {
+      "id": "cf-discovery-card-check",
+      "name": "Stored Card Complete?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1120,
+        80
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "cf-card-valid",
+              "leftValue": "={{ typeof $json.message_id === 'string' && /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test($json.message_id) && /^[1-9][0-9]*$/.test(String($json.revision)) && String($json.revision).length <= 10 && Number.isInteger(Number($json.revision)) && ['initial','followup'].includes($json.kind) && typeof $json.card_text === 'string' && $json.card_text.trim().length > 0 && $json.card_text.length <= 4096 && ['approve','edit','skip','dnc'].every(action => ('cf:' + action + ':' + $json.message_id + ':' + $json.revision).length <= 64) }}",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "cf-discovery-card-error",
+      "name": "Incomplete Card",
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        1340,
+        240
+      ],
+      "parameters": {
+        "errorType": "errorMessage",
+        "errorMessage": "Discovery returned a card without a valid stored message ID, revision, or complete Telegram text. No card was posted."
+      }
+    },
+    {
+      "id": "cf-discovery-telegram",
+      "name": "Post Exact Review Card",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1340,
+        20
+      ],
+      "notesInFlow": true,
+      "notes": "HTML entity escaping preserves the visible plain-text card exactly because the Telegram node otherwise defaults to Markdown parsing. Attribution is disabled. This bot must be dedicated to Client Finder; its callbacks are handled by a separate owner-checked workflow.",
+      "parameters": {
+        "resource": "message",
+        "operation": "sendMessage",
+        "chatId": "={{ $('Owner Configuration').first().json.chat_id }}",
+        "text": "={{ $json.card_text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') }}",
+        "replyMarkup": "inlineKeyboard",
+        "inlineKeyboard": {
+          "rows": [
+            {
+              "row": {
+                "buttons": [
+                  {
+                    "text": "Approve & send",
+                    "additionalFields": {
+                      "callback_data": "={{ 'cf:approve:' + $json.message_id + ':' + $json.revision }}"
+                    }
+                  },
+                  {
+                    "text": "Edit",
+                    "additionalFields": {
+                      "callback_data": "={{ 'cf:edit:' + $json.message_id + ':' + $json.revision }}"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "row": {
+                "buttons": [
+                  {
+                    "text": "Skip",
+                    "additionalFields": {
+                      "callback_data": "={{ 'cf:skip:' + $json.message_id + ':' + $json.revision }}"
+                    }
+                  },
+                  {
+                    "text": "Do not contact",
+                    "additionalFields": {
+                      "callback_data": "={{ 'cf:dnc:' + $json.message_id + ':' + $json.revision }}"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "additionalFields": {
+          "appendAttribution": false,
+          "disable_web_page_preview": true,
+          "parse_mode": "HTML"
+        }
+      },
+      "credentials": {
+        "telegramApi": {
+          "name": "CLIENT_FINDER_TELEGRAM_BOT"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "cf-discovery-telegram-send-error",
+      "name": "Telegram Card Delivery Failed",
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        1560,
+        260
+      ],
+      "parameters": {
+        "errorType": "errorMessage",
+        "errorMessage": "Could not post the review card to the dedicated Telegram bot. Configure a separate error workflow before activation; no prospect email was sent."
+      }
+    },
+    {
+      "id": "cf-discovery-telegram-check",
+      "name": "Telegram Card ID Returned?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1560,
+        20
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "cf-telegram-valid",
+              "leftValue": "={{ Number.isInteger(Number($json.result?.message_id ?? $json.message_id)) && Number($json.result?.message_id ?? $json.message_id) > 0 && String($json.result?.chat?.id ?? $json.chat?.id) === $('Owner Configuration').first().json.chat_id }}",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "cf-discovery-telegram-error",
+      "name": "Telegram Result Needs Checking",
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        1780,
+        180
+      ],
+      "parameters": {
+        "errorType": "errorMessage",
+        "errorMessage": "Telegram did not return a valid card ID in the configured owner chat. Check the bot conversation before retrying discovery."
+      }
+    },
+    {
+      "id": "cf-discovery-bind",
+      "name": "Bind Telegram Card in Supabase",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1780,
+        -40
+      ],
+      "notesInFlow": true,
+      "notes": "The CLIENT_FINDER_SUPABASE_REST_AUTH Custom Auth credential must hold both apikey and Authorization: Bearer headers. Grant only the RPC permissions required for client_finder_bind_card. The RPC validates revision and owner/card identity before callbacks may approve.",
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Owner Configuration').first().json.supabase_base_url + '/rest/v1/rpc/client_finder_bind_card' }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpCustomAuth",
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ { message_id: $('One Item per Review Card').item.json.message_id, revision: Number($('One Item per Review Card').item.json.revision), owner_user_id: Number($('Owner Configuration').first().json.owner_user_id), chat_id: Number($json.result?.chat?.id ?? $json.chat?.id), card_id: Number($json.result?.message_id ?? $json.message_id) } }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          },
+          "timeout": 20000
+        }
+      },
+      "credentials": {
+        "httpCustomAuth": {
+          "name": "CLIENT_FINDER_SUPABASE_REST_AUTH"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "cf-discovery-bind-alert",
+      "name": "Tell Owner Card Binding Failed",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2000,
+        180
+      ],
+      "parameters": {
+        "resource": "message",
+        "operation": "sendMessage",
+        "chatId": "={{ $('Owner Configuration').first().json.chat_id }}",
+        "text": "A Client Finder review card was posted, but saving its Telegram card ID failed. Its buttons cannot approve a send. Check the stored draft and bind status before taking action.",
+        "additionalFields": {
+          "appendAttribution": false,
+          "disable_web_page_preview": true,
+          "parse_mode": "HTML"
+        }
+      },
+      "credentials": {
+        "telegramApi": {
+          "name": "CLIENT_FINDER_TELEGRAM_BOT"
+        }
+      }
+    },
+    {
+      "id": "cf-discovery-result-alert",
+      "name": "Tell Owner Discovery Result Malformed",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1120,
+        400
+      ],
+      "parameters": {
+        "resource": "message",
+        "operation": "sendMessage",
+        "chatId": "={{ $('Owner Configuration').first().json.chat_id }}",
+        "text": "Client Finder discovery returned an invalid result. Review cards were stopped; check the research service before trying again.",
+        "additionalFields": {
+          "appendAttribution": false,
+          "disable_web_page_preview": true,
+          "parse_mode": "HTML"
+        }
+      },
+      "credentials": {
+        "telegramApi": {
+          "name": "CLIENT_FINDER_TELEGRAM_BOT"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "cf-discovery-card-alert",
+      "name": "Tell Owner Review Card Incomplete",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1340,
+        360
+      ],
+      "parameters": {
+        "resource": "message",
+        "operation": "sendMessage",
+        "chatId": "={{ $('Owner Configuration').first().json.chat_id }}",
+        "text": "Client Finder stopped an incomplete review card. No approval button was posted for that draft; check its stored evidence and message.",
+        "additionalFields": {
+          "appendAttribution": false,
+          "disable_web_page_preview": true,
+          "parse_mode": "HTML"
+        }
+      },
+      "credentials": {
+        "telegramApi": {
+          "name": "CLIENT_FINDER_TELEGRAM_BOT"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "cf-discovery-delivery-alert",
+      "name": "Tell Owner Review Card Delivery Failed",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1560,
+        380
+      ],
+      "notesInFlow": true,
+      "notes": "This alert may also fail if Telegram is unavailable. An independent n8n error workflow or external alert channel is required before activation.",
+      "parameters": {
+        "resource": "message",
+        "operation": "sendMessage",
+        "chatId": "={{ $('Owner Configuration').first().json.chat_id }}",
+        "text": "Client Finder could not confirm delivery of a review card. Check the dedicated bot conversation and stored draft before running discovery again.",
+        "additionalFields": {
+          "appendAttribution": false,
+          "disable_web_page_preview": true,
+          "parse_mode": "HTML"
+        }
+      },
+      "credentials": {
+        "telegramApi": {
+          "name": "CLIENT_FINDER_TELEGRAM_BOT"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "cf-discovery-id-alert",
+      "name": "Tell Owner Telegram Card ID Uncertain",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1780,
+        300
+      ],
+      "parameters": {
+        "resource": "message",
+        "operation": "sendMessage",
+        "chatId": "={{ $('Owner Configuration').first().json.chat_id }}",
+        "text": "A Client Finder review card may have appeared, but its Telegram ID was not confirmed. Its approval buttons cannot send; inspect the bot chat and database before retrying.",
+        "additionalFields": {
+          "appendAttribution": false,
+          "disable_web_page_preview": true,
+          "parse_mode": "HTML"
+        }
+      },
+      "credentials": {
+        "telegramApi": {
+          "name": "CLIENT_FINDER_TELEGRAM_BOT"
+        }
+      },
+      "onError": "continueErrorOutput"
+    }
+  ],
+  "connections": {
+    "Daily 08:00 Manila": {
+      "main": [
+        [
+          {
+            "node": "Owner Configuration",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run Manually": {
+      "main": [
+        [
+          {
+            "node": "Owner Configuration",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Owner Configuration": {
+      "main": [
+        [
+          {
+            "node": "Owner Configuration Ready?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Owner Configuration Ready?": {
+      "main": [
+        [
+          {
+            "node": "Discover Agency Prospects",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Configuration Missing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Discover Agency Prospects": {
+      "main": [
+        [
+          {
+            "node": "Discovery Result Valid?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Tell Owner Discovery Service Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Discovery Result Valid?": {
+      "main": [
+        [
+          {
+            "node": "Any Approval-Ready Cards?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Tell Owner Discovery Result Malformed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Any Approval-Ready Cards?": {
+      "main": [
+        [
+          {
+            "node": "Partial Discovery Issues?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Tell Owner No Ready Cards",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Partial Discovery Issues?": {
+      "main": [
+        [
+          {
+            "node": "Tell Owner Partial Discovery Issues",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "One Item per Review Card",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "One Item per Review Card",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "One Item per Review Card": {
+      "main": [
+        [
+          {
+            "node": "Stored Card Complete?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stored Card Complete?": {
+      "main": [
+        [
+          {
+            "node": "Post Exact Review Card",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Tell Owner Review Card Incomplete",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Post Exact Review Card": {
+      "main": [
+        [
+          {
+            "node": "Telegram Card ID Returned?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Tell Owner Review Card Delivery Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram Card ID Returned?": {
+      "main": [
+        [
+          {
+            "node": "Bind Telegram Card in Supabase",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Tell Owner Telegram Card ID Uncertain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tell Owner Discovery Result Malformed": {
+      "main": [
+        [
+          {
+            "node": "Discovery Result Malformed",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Discovery Result Malformed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tell Owner Review Card Incomplete": {
+      "main": [
+        [
+          {
+            "node": "Incomplete Card",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Incomplete Card",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tell Owner Review Card Delivery Failed": {
+      "main": [
+        [
+          {
+            "node": "Telegram Card Delivery Failed",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Telegram Card Delivery Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tell Owner Telegram Card ID Uncertain": {
+      "main": [
+        [
+          {
+            "node": "Telegram Result Needs Checking",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Telegram Result Needs Checking",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Bind Telegram Card in Supabase": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Tell Owner Card Binding Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Asia/Manila",
+    "saveDataErrorExecution": "none",
+    "saveDataSuccessExecution": "none",
+    "saveManualExecutions": false,
+    "saveExecutionProgress": false
+  },
+  "pinData": {}
+}
